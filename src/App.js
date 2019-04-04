@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
 import SearchContainer from './containers/SearchContainer'
 
 class App extends Component {
@@ -9,7 +7,6 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
         <SearchContainer />
-
         </header>
       </div>
     );
