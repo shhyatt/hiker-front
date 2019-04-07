@@ -31,3 +31,23 @@
     transform: rotate(360deg);
   }
 }
+
+.ui.card, .ui.cards>.card {
+  width: 100px;
+}
+
+.ui.buttons .button {
+  margin: 3px;
+}
+
+.ui.segment.pushable {
+  min-height:900px;
+}
+
+.ui.inverted.vertical.labeled.icon.ui.push.left.this.visible.sidebar.menu {
+  height:900px;
+}
+
+#root > div > div > div.pusher > div > div > div > div > div >  form > div.fields {
+  margin-left: 14.5%;
+}
