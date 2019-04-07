@@ -25,6 +25,7 @@ class SearchContainer extends React.Component {
      this.setState({
        hikes: hikes
      })
+  
    })
  }
 
@@ -65,8 +66,6 @@ class SearchContainer extends React.Component {
  }
 
   render(){
-    //console.log(this.state.hikes);
-    //console.log(this.state.unitedStates);
     return (
       <div>
       <form>
@@ -85,5 +84,3 @@ class SearchContainer extends React.Component {
 
 } // end of class
 export default SearchContainer
-
-//https://www.hikingproject.com/data/get-trails?lat=40.0274&lon=-105.2519&maxDistance=10&key=200441896-c10efc088226e872ef079f3ab9990b2f

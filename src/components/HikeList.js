@@ -3,17 +3,22 @@ import Hike from './Hike'
 import { Button } from 'semantic-ui-react'
 
 const HikeList = ({hikes}) => {
-  //console.log(hikes)
+
 
 
   const renderHikes = () => {
-    console.log(hikes);
-    // return hikes.map(hike => <Hike
-    //   key={hike.id}
-    //   hike={hike}
-    //    />)
-  }
+    //console.log(hikes);
 
+    if(hikes.trails !== undefined){
+      let newHikes = hikes.trails.map(hike => <Hike
+        key={hike.id}
+        hike={hike}
+         />)
+
+      return newHikes
+    } else return null
+
+  }
 
 
   return (
