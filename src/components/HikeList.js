@@ -1,6 +1,6 @@
 import React from 'react'
 import Hike from './Hike'
-import { Button, Card } from 'semantic-ui-react'
+import { Card } from 'semantic-ui-react'
 
 const HikeList = ({hikes}) => {
 

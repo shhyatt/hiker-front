@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React from 'react'
 import { Card, Button, Icon, Image } from 'semantic-ui-react'
 
 const Hike = (props) => {

@@ -54,9 +54,9 @@ class SearchContainer extends React.Component {
    // console.log(this.state.searchedState)
    //console.log(this.state.unitedStates);
    this.state.unitedStates.find(area => {
-     //console.log(area.name);
+
       if(this.state.searchedState === area.name){
-        this.setState({
+        return this.setState({
           latitude: area.latitude,
           longitude: area.longitude
         }, () => this.fetchHikes() )
