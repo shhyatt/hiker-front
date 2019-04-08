@@ -17,12 +17,12 @@ class HikeContainer extends React.Component {
               Home
               </Menu.Item>
               <Menu.Item as='a'>
-                <Icon name='gamepad' />
-                Games
+                <Icon name='thumbs up outline' />
+                Liked Hikes
                 </Menu.Item>
                 <Menu.Item as='a'>
-                  <Icon name='camera' />
-                  Channels
+                  <Icon name='check' />
+                  Hikes I've done
                 </Menu.Item>
               </Sidebar>
 
@@ -31,7 +31,6 @@ class HikeContainer extends React.Component {
       <Segment.Inline>
       <HikeList
       hikes={this.props.hikes}/>
-
       </Segment.Inline>
     </Sidebar.Pusher>
   </Sidebar.Pushable>

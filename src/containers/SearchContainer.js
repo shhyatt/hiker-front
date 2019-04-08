@@ -18,14 +18,14 @@ class SearchContainer extends React.Component {
  }
 
  fetchHikes = () => {
-   fetch(`https://www.hikingproject.com/data/get-trails?lat=${this.state.latitude}&lon=${this.state.longitude}&maxDistance=10&key=200441896-c10efc088226e872ef079f3ab9990b2f`)
+   fetch(`https://www.hikingproject.com/data/get-trails?lat=${this.state.latitude}&lon=${this.state.longitude}&maxDistance=100&key=200441896-c10efc088226e872ef079f3ab9990b2f`)
    .then(r => r.json())
    .then(hikes => {
      //console.log(hikes.trails);
      this.setState({
        hikes: hikes
      })
-  
+
    })
  }
 

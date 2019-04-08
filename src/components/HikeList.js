@@ -1,10 +1,8 @@
 import React from 'react'
 import Hike from './Hike'
-import { Button } from 'semantic-ui-react'
+import { Button, Card } from 'semantic-ui-react'
 
 const HikeList = ({hikes}) => {
-
-
 
   const renderHikes = () => {
     //console.log(hikes);
@@ -20,13 +18,12 @@ const HikeList = ({hikes}) => {
 
   }
 
-
   return (
     <div>
     <h1>Pick A Hike</h1>
-    <Button.Group>
+    <Card.Group>
     {renderHikes()}
-    </Button.Group>
+    </Card.Group>
 
     </div>
   )

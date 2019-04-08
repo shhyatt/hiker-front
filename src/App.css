@@ -9,18 +9,18 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #4a7053;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: black;
 }
 
 .App-link {
-  color: #61dafb;
+  color: red;
 }
 
 @keyframes App-logo-spin {
@@ -32,21 +32,36 @@
   }
 }
 
-.ui.card, .ui.cards>.card {
-  width: 100px;
+.ui.card {
+  width: 225px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: left;
+  padding: 10px;
+  background-color: #4a7053;
+  border: 10px;
 }
 
-.ui.buttons .button {
-  margin: 3px;
+.ui.buttons, .button {
+  margin: 10px;
+  background-color: #4a7053;
 }
 
 .ui.segment.pushable {
   min-height:900px;
+  width: 1200px;
+  align-items: center;
+  background-color: #4a7053;
 }
 
-.ui.inverted.vertical.labeled.icon.ui.push.left.this.visible.sidebar.menu {
-  height:900px;
+.ui.inverted.vertical.labeled.icon.ui.push.left.thin.visible.sidebar.menu {
+  background-color: #4a7053;
+
 }
+
+
 
 #root > div > div > div.pusher > div > div > div > div > div >  form > div.fields {
   margin-left: 14.5%;
