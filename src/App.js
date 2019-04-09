@@ -95,10 +95,10 @@ class App extends Component {
         if (!!user) {
           localStorage.setItem('id', user.id)
           this.setState({
-            email: "",
-            password: "",
-            firstName: "",
-            lastName: ""
+            email: user.email,
+            password: user.password_digest,
+            firstName: user.first_name,
+            lastName: user.last_name
           })
         } else {
           return alert("Please double check your email or password.")
@@ -106,15 +106,55 @@ class App extends Component {
     }
 
   handleSignUp = (event) => {
+    event.preventDefault()
+    const data = {
+      first_name: this.state.firstName,
+      last_name: this.state.lastName,
+      email: this.state.email,
+      password_digest: this.state.password
+    }
+    fetch("http://localhost:3000/api/v1/users", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accepts': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(r => r.json())
+    .then(user => {
+      localStorage.setItem('id', user.id)
+      this.setState({
+        users: [...this.state.users, user],
+        firstName: user.first_name,
+        lastName: user.last_name,
+        email: user.email,
+        password: user.password_digest
+      })
+    })
     //console.log("Hello!")
       // console.log(e.target);
       }
-
   handleUserChange = (event) => {
     this.setState({[event.target.name]: event.target.value})
   }
+  handleLogout = () => {
+    localStorage.clear()
+    this.setState({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      hikes: [],
+      searchedState: "",
+      haveHikes: [],
+      wantToHike: []
+    })
+    //console.log("hello!");
+  }
 
   render() {
+    //console.log(this.state.firstName);
 
     return (
 
@@ -140,7 +180,7 @@ class App extends Component {
             <Menu.Item as={Link} to='/login'>Sign In
                   <Icon name='sign-in alternate' />
             </Menu.Item>
-            <Menu.Item as='a'>Sign Out
+            <Menu.Item onClick={this.handleLogout}as='a'>Sign Out
                   <Icon name='sign-out alternate' />
             </Menu.Item>
               </Sidebar>
@@ -181,22 +221,3 @@ export default App;
 //             handleLogin={this.handleLogin}
 //           />}
 //         />
-
-// handleLogin = (event) => {
-//     event.preventDefault()
-//     const user = this.state.users.find(user => user.email === this.state.email && user.password === this.state.password);
-//     if (!!user) {
-//       localStorage.setItem('id', user.id)
-//       this.setState({
-//         loginToggle: false,
-//         email: "",
-//         password: "",
-//       })
-//     } else {
-//       return alert("Please double check your email or password.")
-//     }
-//   }
-
-// handleChange = (event) => {
-//     this.setState({[event.target.name]: event.target.value})
-//   }
