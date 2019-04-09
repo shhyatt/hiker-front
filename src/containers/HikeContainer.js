@@ -1,8 +1,8 @@
 import React from 'react'
 import HikeList from '../components/HikeList'
 
-import HaveHiked from '../components/HaveHiked'
-import WantToHike from '../components/WantToHike'
+// import HaveHiked from '../components/HaveHiked'
+// import WantToHike from '../components/WantToHike'
 
 import '../App.css'
 

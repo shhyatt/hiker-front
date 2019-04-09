@@ -6,7 +6,7 @@ import HikeContainer from './containers/HikeContainer'
 import './App.css'
 import WantToHike from './components/WantToHike'
 import HaveHiked from './components/HaveHiked'
-import Login from './components/HaveHiked'
+import Login from './components/Login'
 
 
 
@@ -17,12 +17,20 @@ class App extends Component {
     unitedStates: [],
     searchedState: "",
     latitude: "",
-    longitude: ""
+    longitude: "",
+    users: [],
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    haveHiked: [],
+    WantToHike: []
   }
 
  componentDidMount = () => {
    this.fetchStates()
    this.fetchHikes()
+   this.fetchUsers()
  }
 
  fetchHikes = () => {
@@ -46,6 +54,17 @@ class App extends Component {
        unitedStates: regions
      })
    })
+ }
+
+ fetchUsers = () => {
+   fetch("http://localhost:3000/api/v1/users")
+   .then(r => r.json())
+   .then(users => {
+     //console.log(users);
+     this.setState({
+       users: users
+     })
+   })
 
  }
 
@@ -58,9 +77,6 @@ class App extends Component {
 
  clickSearch = (e) => {
    e.preventDefault()
-    //console.log(e.target);
-   // console.log(this.state.searchedState)
-   //console.log(this.state.unitedStates);
    this.state.unitedStates.find(area => {
 
       if(this.state.searchedState === area.name){
@@ -73,39 +89,35 @@ class App extends Component {
    })
  }
 
-
   handleSignIn = (e) => {
-    //console.log("Hello!")
-    console.log(e.target);
-    // return (
-    // <Modal trigger={e.target}>
-    //   <Modal.Header>Sign In</Modal.Header>
-    //       <Modal.Content>
-    //         <Form>
-    //           <Form.Field>
-    //             <label>First Name</label>
-    //             <input placeholder='First Name' />
-    //           </Form.Field>
-    //           <Form.Field>
-    //             <label>Last Name</label>
-    //             <input placeholder='Last Name' />
-    //           </Form.Field>
-    //             <label>E-mail</label>
-    //             <input placeholder='E-mail' />
-    //           <Form.Field>
-    //             <label>Password</label>
-    //             <input placeholder='Password' />
-    //           </Form.Field>
-    //           <Button type='submit'>Submit</Button>
-    //         </Form>
-    //         </Modal.Content>
-    //   </Modal>
-    //   )
+     //console.log("Hello!")
+    // console.log(e.target);
     }
+
+  handleSignUp = (e) => {
+    //console.log("Hello!")
+      // console.log(e.target);
+      }
+
+  handleFirstName = (e) => {
+    //console.log("firstname", e.target.value);
+    }
+
+  handleLastName = (e) => {
+    //console.log("LastName", e.target.value);
+    }
+  handleEmail = (e) => {
+    //console.log("email", e.target.value);
+      }
+  handlePassword = (e) => {
+    //console.log("Password", e.target.value);
+  }
+
   render() {
     return (
 
       <div className="App">
+
       <header className="App-header">
       <SearchContainer
       handleSearch={this.handleSearch}
@@ -123,8 +135,8 @@ class App extends Component {
             <Menu.Item as={Link} to='/havehiked'>Hikes I've Done
                   <Icon name='check' />
             </Menu.Item>
-            <Menu.Item as='a'>Sign In
-                  <Icon onClick={(e) => this.handleSignIn(e)}name='sign-in alternate' />
+            <Menu.Item as={Link} to='/login'>Sign In
+                  <Icon name='sign-in alternate' />
             </Menu.Item>
             <Menu.Item as='a'>Sign Out
                   <Icon name='sign-out alternate' />
@@ -134,13 +146,22 @@ class App extends Component {
                   <Segment.Inline>
                   <HikeContainer
                   hikes={this.state.hikes} />
+                  <Route exact path='/' component={SearchContainer} />
+                  <Route path='/wanttohike' component={WantToHike} />
+                  <Route path='/login'
+                  render={(props) => <Login
+                  handleSignIn={this.handleSignIn}
+                  handleFirstName={this.handleFirstName}
+                  handleLastName={this.handleLastName}
+                  handleEmail={this.handleEmail}
+                  handlePassword={this.handlePassword}
+                  handleSignUp={this.handleSignUp} />} />
+                  <Route path='/havehiked' component={HaveHiked} />
                     </Segment.Inline>
               </Sidebar.Pusher>
             </Sidebar.Pushable>
-        <Route exact path='/' component={SearchContainer} />
-        <Route path='/wanttohike' component={WantToHike} />
-        <Route path='/havehiked' component={HaveHiked} />
-        <Route path='/login' component={Login} />
+
+
       </div>
     )
   }
@@ -148,3 +169,12 @@ class App extends Component {
 }
 
 export default App;
+
+// <Route path="/login"
+//           render={(props) => <Login
+//             email={this.state.email}
+//             password={this.state.password}
+//             handleChange={this.handleChange}
+//             handleLogin={this.handleLogin}
+//           />}
+//         />
