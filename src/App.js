@@ -89,31 +89,33 @@ class App extends Component {
    })
  }
 
-  handleSignIn = (e) => {
-     //console.log("Hello!")
-    // console.log(e.target);
+  handleSignIn = (event) => {
+    event.preventDefault()
+    const user = this.state.users.find(user => user.email === this.state.email && user.password_digest === this.state.password && user.first_name === this.state.firstName && user.last_name === this.state.lastName);
+        if (!!user) {
+          localStorage.setItem('id', user.id)
+          this.setState({
+            email: "",
+            password: "",
+            firstName: "",
+            lastName: ""
+          })
+        } else {
+          return alert("Please double check your email or password.")
+        }
     }
 
-  handleSignUp = (e) => {
+  handleSignUp = (event) => {
     //console.log("Hello!")
       // console.log(e.target);
       }
 
-  handleFirstName = (e) => {
-    //console.log("firstname", e.target.value);
-    }
-
-  handleLastName = (e) => {
-    //console.log("LastName", e.target.value);
-    }
-  handleEmail = (e) => {
-    //console.log("email", e.target.value);
-      }
-  handlePassword = (e) => {
-    //console.log("Password", e.target.value);
+  handleUserChange = (event) => {
+    this.setState({[event.target.name]: event.target.value})
   }
 
   render() {
+
     return (
 
       <div className="App">
@@ -151,11 +153,12 @@ class App extends Component {
                   <Route path='/login'
                   render={(props) => <Login
                   handleSignIn={this.handleSignIn}
-                  handleFirstName={this.handleFirstName}
-                  handleLastName={this.handleLastName}
-                  handleEmail={this.handleEmail}
-                  handlePassword={this.handlePassword}
-                  handleSignUp={this.handleSignUp} />} />
+                  handleSignUp={this.handleSignUp}
+                  firstName={this.state.firstName}
+                  lastName={this.state.lastName}
+                  email={this.state.email}
+                  password={this.state.password}
+                  handleUserChange={this.handleUserChange} />} />
                   <Route path='/havehiked' component={HaveHiked} />
                     </Segment.Inline>
               </Sidebar.Pusher>
@@ -178,3 +181,22 @@ export default App;
 //             handleLogin={this.handleLogin}
 //           />}
 //         />
+
+// handleLogin = (event) => {
+//     event.preventDefault()
+//     const user = this.state.users.find(user => user.email === this.state.email && user.password === this.state.password);
+//     if (!!user) {
+//       localStorage.setItem('id', user.id)
+//       this.setState({
+//         loginToggle: false,
+//         email: "",
+//         password: "",
+//       })
+//     } else {
+//       return alert("Please double check your email or password.")
+//     }
+//   }
+
+// handleChange = (event) => {
+//     this.setState({[event.target.name]: event.target.value})
+//   }
