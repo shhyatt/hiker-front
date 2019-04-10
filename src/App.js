@@ -21,7 +21,10 @@ class App extends Component {
     email: "",
     password: "",
     haveHiked: [],
-    wantToHike: []
+    wantToHike: [],
+    userWantToHike: [],
+    userWantHikeID: [],
+    userWantToHikeHikes: []
   }
 
  componentDidMount = () => {
@@ -29,6 +32,7 @@ class App extends Component {
    this.fetchHikes()
    this.fetchUsers()
    this.likedHikes()
+   this.fetchUserWantHikes()
  }
 
  fetchHikes = () => {
@@ -69,13 +73,42 @@ class App extends Component {
    fetch("http://localhost:3000/api/v1/likehikes")
    .then(r =>  r.json())
    .then(hikes => {
+     //console.log(hikes)
        this.setState({
          wantToHike: hikes
        })
+       this.filterLikedHikes()
+    })
+  }
+
+  filterLikedHikes = () => {
+    let userHikes = this.state.wantToHike.filter(hike => hike.user_id === parseInt(localStorage.id))
+    //console.log(userHikes);
+    this.setState({
+      userWantToHike: userHikes
+    })
+    this.getUserLikeIDs()
+  }
+
+  getUserLikeIDs = () => {
+    let ids = this.state.userWantToHike.map(hike => hike.hike_id)
+    //console.log(ids);
+    this.setState({
+      userWantHikeID: ids
+    }, () => this.fetchUserWantHikes())
+  }
+
+ fetchUserWantHikes = () => {
+   fetch(`https://www.hikingproject.com/data/get-trails-by-id?ids=${this.state.userWantHikeID}&key=200441896-c10efc088226e872ef079f3ab9990b2f`)
+   .then(r => r.json())
+   .then(data => {
+     //console.log(data);
+     this.setState({
+       userWantToHikeHikes: data
      })
-}
+   })
 
-
+ }
 
  handleSearch = (e) => {
    //console.log(e.target.value);
@@ -157,13 +190,12 @@ class App extends Component {
       hikes: [],
       searchedState: "",
       haveHikes: [],
-      wantToHike: []
+      wantToHike: [],
+      userWantToHike: []
     })
     //console.log("hello!");
   }
-
   handleLikedHike = (id) => {
-
 
     // console.log("Helllloooooo", id, localStorage.id);
     fetch("http://localhost:3000/api/v1/likehikes", {
@@ -179,13 +211,17 @@ class App extends Component {
     })
     .then(r => r.json())
     .then(data => {
-      console.log(data);
+      //console.log(data);
+      this.setState({
+        wantToHike: [...this.state.wantToHike, data]
+      })
     })
   }
 
   render() {
     //console.log(this.state.firstName);
-    console.log(this.state.wantToHike);
+    //console.log(this.state.userWantToHike);
+    console.log(this.state.userWantToHikeHikes);
     return (
 
       <div className="App">
@@ -218,7 +254,8 @@ class App extends Component {
                   <Segment.Inline>
                   <HikeContainer
                   hikes={this.state.hikes}
-                  likedHikes={this.handleLikedHike} />
+                  likedHikes={this.handleLikedHike}
+                  userWants={this.state.userWantToHikeHikes}/>
                   <Route exact path='/' component={SearchContainer} />
                   <Route path='/wanttohike' component={WantToHike} />
                   <Route path='/login'
@@ -251,3 +288,5 @@ export default App;
 //             handleLogin={this.handleLogin}
 //           />}
 //         />
+
+//https://www.hikingproject.com/data/get-trails-by-id?ids=7001635,7002742,7000108,7002175,7005207&key=200441896-c10efc088226e872ef079f3ab9990b2f
