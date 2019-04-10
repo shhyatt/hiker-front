@@ -2,15 +2,15 @@ import React from 'react'
 import Hike from './Hike'
 import { Card } from 'semantic-ui-react'
 
-const HikeList = ({hikes}) => {
+const HikeList = ({hikes, likedHikes}) => {
 
   const renderHikes = () => {
-    //console.log(hikes);
 
     if(hikes.trails !== undefined){
       let newHikes = hikes.trails.map(hike => <Hike
         key={hike.id}
         hike={hike}
+        likedHikes={likedHikes}
          />)
 
       return newHikes

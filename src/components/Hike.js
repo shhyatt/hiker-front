@@ -1,18 +1,18 @@
 import React from 'react'
 import { Card, Button, Icon, Image } from 'semantic-ui-react'
 
-const Hike = (props) => {
-  //console.log(props.hike.name);
+const Hike = ({hike, likedHikes}) => {
+  //console.log(hike.id);
   return (
     <React.Fragment>
         <Card>
           <Card.Content>
-          <Card.Header>{props.hike.name}</Card.Header>
-          <h5>{props.hike.location}</h5>
-          <h5>{props.hike.summary}</h5>
+          <Card.Header>{hike.name}</Card.Header>
+          <h5>{hike.location}</h5>
+          <h5>{hike.summary}</h5>
           </Card.Content>
-        <Image src={props.hike.imgSmall} style={{width:'100px'}} alt={props.hike.name}/>
-        <Button>
+        <Image src={hike.imgSmall} style={{width:'150px'}} alt={hike.name}/>
+        <Button onClick={() => likedHikes(hike.id)}>
           <Icon name='thumbs up outline' />
           <p>I want to hike this!</p>
         </Button>

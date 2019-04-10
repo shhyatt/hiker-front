@@ -8,10 +8,7 @@ import WantToHike from './components/WantToHike'
 import HaveHiked from './components/HaveHiked'
 import Login from './components/Login'
 
-
-
 class App extends Component {
-
   state = {
     hikes: [],
     unitedStates: [],
@@ -24,24 +21,24 @@ class App extends Component {
     email: "",
     password: "",
     haveHiked: [],
-    WantToHike: []
+    wantToHike: []
   }
 
  componentDidMount = () => {
    this.fetchStates()
    this.fetchHikes()
    this.fetchUsers()
+   this.likedHikes()
  }
 
  fetchHikes = () => {
    fetch(`https://www.hikingproject.com/data/get-trails?lat=${this.state.latitude}&lon=${this.state.longitude}&maxDistance=100&key=200441896-c10efc088226e872ef079f3ab9990b2f`)
    .then(r => r.json())
    .then(hikes => {
+         this.setState({
+           hikes: hikes
+         })
      //console.log(hikes.trails);
-     this.setState({
-       hikes: hikes
-     })
-
    })
  }
 
@@ -67,6 +64,18 @@ class App extends Component {
    })
 
  }
+
+ likedHikes = () => {
+   fetch("http://localhost:3000/api/v1/likehikes")
+   .then(r =>  r.json())
+   .then(hikes => {
+       this.setState({
+         wantToHike: hikes
+       })
+     })
+}
+
+
 
  handleSearch = (e) => {
    //console.log(e.target.value);
@@ -107,7 +116,7 @@ class App extends Component {
 
   handleSignUp = (event) => {
     event.preventDefault()
-    const data = {
+    let data = {
       first_name: this.state.firstName,
       last_name: this.state.lastName,
       email: this.state.email,
@@ -153,9 +162,30 @@ class App extends Component {
     //console.log("hello!");
   }
 
+  handleLikedHike = (id) => {
+
+
+    // console.log("Helllloooooo", id, localStorage.id);
+    fetch("http://localhost:3000/api/v1/likehikes", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accepts': 'application/json'
+      },
+      body: JSON.stringify({
+        user_id: localStorage.id,
+        hike_id: id
+      })
+    })
+    .then(r => r.json())
+    .then(data => {
+      console.log(data);
+    })
+  }
+
   render() {
     //console.log(this.state.firstName);
-
+    console.log(this.state.wantToHike);
     return (
 
       <div className="App">
@@ -187,7 +217,8 @@ class App extends Component {
                 <Sidebar.Pusher>
                   <Segment.Inline>
                   <HikeContainer
-                  hikes={this.state.hikes} />
+                  hikes={this.state.hikes}
+                  likedHikes={this.handleLikedHike} />
                   <Route exact path='/' component={SearchContainer} />
                   <Route path='/wanttohike' component={WantToHike} />
                   <Route path='/login'
@@ -203,7 +234,6 @@ class App extends Component {
                     </Segment.Inline>
               </Sidebar.Pusher>
             </Sidebar.Pushable>
-
 
       </div>
     )
