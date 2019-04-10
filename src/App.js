@@ -221,7 +221,7 @@ class App extends Component {
   render() {
     //console.log(this.state.firstName);
     //console.log(this.state.userWantToHike);
-    console.log(this.state.userWantToHikeHikes);
+    //console.log(this.state.userWantToHikeHikes);
     return (
 
       <div className="App">
