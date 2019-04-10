@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Button, Icon, Image } from 'semantic-ui-react'
 
-const Hike = ({hike, likedHikes}) => {
+const Hike = ({hike, likedHikes, haveHiked}) => {
   //console.log(hike.id);
   return (
     <React.Fragment>
@@ -16,7 +16,7 @@ const Hike = ({hike, likedHikes}) => {
           <Icon name='thumbs up outline' />
           <p>I want to hike this!</p>
         </Button>
-        <Button>
+        <Button onClick={() => haveHiked(hike.id)}>
           <Icon name='check' />
           <p>I have hiked this!</p>
         </Button>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SearchContainer from './containers/SearchContainer'
-import { Sidebar, Button, Modal, Header, Form, Icon, Menu, Segment } from 'semantic-ui-react'
+import { Sidebar, Button, Header, Icon, Menu, Segment } from 'semantic-ui-react'
 import { Route, Link } from 'react-router-dom'
 import HikeContainer from './containers/HikeContainer'
 import './App.css'
@@ -24,7 +24,10 @@ class App extends Component {
     wantToHike: [],
     userWantToHike: [],
     userWantHikeID: [],
-    userWantToHikeHikes: []
+    userWantToHikeHikes: [],
+    userHaveHiked: [],
+    userHaveHikedID: [],
+    userHaveHikedHikes: []
   }
 
  componentDidMount = () => {
@@ -33,6 +36,8 @@ class App extends Component {
    this.fetchUsers()
    this.likedHikes()
    this.fetchUserWantHikes()
+   this.fetchHaveHiked()
+   this.fetchUserHaveHiked()
  }
 
  fetchHikes = () => {
@@ -42,7 +47,6 @@ class App extends Component {
          this.setState({
            hikes: hikes
          })
-     //console.log(hikes.trails);
    })
  }
 
@@ -106,6 +110,47 @@ class App extends Component {
      this.setState({
        userWantToHikeHikes: data
      })
+   })
+
+ }
+
+ fetchHaveHiked = () => {
+   fetch("http://localhost:3000/api/v1/havehikes")
+   .then(r => r.json())
+   .then(data => {
+     //console.log(data);
+     this.setState({
+       haveHiked: data
+     })
+     this.filterHaveHiked()
+   })
+ }
+
+ filterHaveHiked = () => {
+   let userHaveHiked = this.state.haveHiked.filter(hike => hike.user_id === parseInt(localStorage.id))
+   //console.log(userHikes);
+   this.setState({
+     userHaveHiked: userHaveHiked
+   })
+   this.getUserhaveHikedID()
+ }
+
+ getUserhaveHikedID = () => {
+   let ids = this.state.userHaveHiked.map(hike => hike.hike_id)
+   //console.log(ids);
+   this.setState({
+     userHaveHikedID: ids
+   }, () => this.fetchUserHaveHiked())
+ }
+
+ fetchUserHaveHiked = () => {
+   fetch(`https://www.hikingproject.com/data/get-trails-by-id?ids=${this.state.userHaveHikedID}&key=200441896-c10efc088226e872ef079f3ab9990b2f`)
+   .then(r => r.json())
+   .then(data => {
+     this.setState({
+       userHaveHikedHikes: data
+     })
+     //console.log(data);
    })
 
  }
@@ -189,14 +234,15 @@ class App extends Component {
       password: "",
       hikes: [],
       searchedState: "",
-      haveHikes: [],
+      haveHiked: [],
       wantToHike: [],
-      userWantToHike: []
+      userWantToHike: [],
+      userWantToHikeHikes: []
     })
     //console.log("hello!");
   }
-  handleLikedHike = (id) => {
 
+  handleLikedHike = (id) => {
     // console.log("Helllloooooo", id, localStorage.id);
     fetch("http://localhost:3000/api/v1/likehikes", {
       method: "POST",
@@ -218,10 +264,34 @@ class App extends Component {
     })
   }
 
+  handleHaveHiked = (id) => {
+    //console.log("Helllloooooo", id)
+    fetch("http://localhost:3000/api/v1/havehikes", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accepts': 'application/json'
+      },
+      body: JSON.stringify({
+        user_id: localStorage.id,
+        hike_id: id
+      })
+    })
+    .then(r => r.json())
+    .then(data => {
+      //console.log(data);
+      this.setState({
+        haveHiked: [...this.state.haveHiked, data]
+      })
+    })
+  }
+
   render() {
     //console.log(this.state.firstName);
     //console.log(this.state.userWantToHike);
     //console.log(this.state.userWantToHikeHikes);
+    //console.log(this.state.haveHiked);
+    //console.log(this.state.userHaveHikedHikes);
     return (
 
       <div className="App">
@@ -255,7 +325,9 @@ class App extends Component {
                   <HikeContainer
                   hikes={this.state.hikes}
                   likedHikes={this.handleLikedHike}
-                  userWants={this.state.userWantToHikeHikes}/>
+                  userWants={this.state.userWantToHikeHikes}
+                  haveHiked={this.handleHaveHiked}
+                  userHaves={this.state.userHaveHikedHikes}/>
                   <Route exact path='/' component={SearchContainer} />
                   <Route path='/wanttohike' component={WantToHike} />
                   <Route path='/login'
@@ -288,5 +360,3 @@ export default App;
 //             handleLogin={this.handleLogin}
 //           />}
 //         />
-
-//https://www.hikingproject.com/data/get-trails-by-id?ids=7001635,7002742,7000108,7002175,7005207&key=200441896-c10efc088226e872ef079f3ab9990b2f
