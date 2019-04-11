@@ -3,6 +3,7 @@ import Hike from './Hike'
 import { Card } from 'semantic-ui-react'
 
 const HikeList = ({hikes, likedHikes, haveHiked }) => {
+  //console.log(hikes, "HikeList");
 
 
   const renderHikes = () => {

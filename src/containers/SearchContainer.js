@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Link, Switch } from 'react-router-dom'
+import { Form, Button, Header } from 'semantic-ui-react'
 import Hike from '../components/Hike'
 
 class SearchContainer extends React.Component {
@@ -11,18 +12,14 @@ class SearchContainer extends React.Component {
 
     return (
       <div>
-      <form>
-        <label>
-          Search By State:
-          <input type="text" id="search" onChange={(e) => this.props.handleSearch(e)}/>
-        </label>
-        <Link to={'/hikes'}>
-        <input className="btn btn-primary" type="submit" value="Find a Hike!" onClick={(e) => this.props.clickSearch(e)} />
-        </Link>
-
-
-
-        </form>
+      <Form>
+        <Header as="h3">Search for a Hike!</Header>
+        <Form.Field>
+        <label>Search By State:</label>
+        <input type="text" onChange={(e) => this.props.handleSearch(e)}/>
+        </Form.Field>
+        <Button onClick={(e) => this.props.clickSearch(e, this.props.routerProps)}as={Link} to={"/hikes"} >Find A Hike!</Button>
+        </Form>
       </div>
     )
 
@@ -34,3 +31,12 @@ export default SearchContainer
 
 //<Menu.Item onClick={this.handleLogout}as='a'>
 //as={Link} to='/login'>
+
+// <div>
+//    <Form>
+//      <Header as="h3">Sign In or Sign Up</Header>
+//      <Form.Field>
+//        <label>First Name</label>
+//        <input onChange={handleUserChange} name="firstName" value={firstName} placeholder='First Name' />
+//      </Form.Field>
+//<Button as={Link} to={“/dashboard”}>Back</Button>

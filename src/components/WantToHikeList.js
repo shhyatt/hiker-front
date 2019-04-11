@@ -6,7 +6,7 @@ import { Card } from 'semantic-ui-react'
 
 const WantToHikeList = ({ userWants }) => {
 
-  console.log("in Hike List", hikes);
+  console.log("in Want To Hike List");
 
   const renderWantHikes = () => {
     if(userWants.trails !== undefined){

@@ -43,12 +43,12 @@ class App extends Component {
    this.fetchUserHaveHiked()
  }
 
- fetchHikes = () => {
+ fetchHikes = (routerProps) => {
 
    fetch(`https://www.hikingproject.com/data/get-trails?lat=${this.state.latitude}&lon=${this.state.longitude}&maxDistance=100&key=200441896-c10efc088226e872ef079f3ab9990b2f`)
    .then(r => r.json())
    .then(hikes => {
-     window.history.pushState({},"/hikes","/hikes")
+     routerProps.history.push("/hikes")
          this.setState({
            hikes: hikes
          })
@@ -167,7 +167,7 @@ class App extends Component {
   })
  }
 
- clickSearch = (e) => {
+ clickSearch = (e, routerProps) => {
    e.preventDefault()
    this.state.unitedStates.find(area => {
 
@@ -175,7 +175,7 @@ class App extends Component {
         return this.setState({
           latitude: area.latitude,
           longitude: area.longitude
-        }, () => this.fetchHikes() )
+        }, () => this.fetchHikes(routerProps) )
 
       }
    })
@@ -292,23 +292,18 @@ class App extends Component {
   }
 
   render() {
+    //console.log(this.state.hikes);
     //console.log(this.state.firstName);
     //console.log(this.state.userWantToHike);
     //console.log(this.state.userWantToHikeHikes);
     //console.log(this.state.haveHiked);
     //console.log(this.state.userHaveHikedHikes);
+    console.log(this.state.userWantToHikeHikes);
     return (
-
       <div className="App">
-
-      <header className="App-header">
-      <SearchContainer
-      handleSearch={this.handleSearch}
-      clickSearch={this.clickSearch}/>
-      </header>
         <Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} animation ='push' icon='labeled' inverted vertical visible width='thin'>
-            <Menu.Item as={Link} to='/'>
+            <Menu.Item as={Link} to='/search'>
             Back To Search
                 <Icon name='home' />
             </Menu.Item>
@@ -332,9 +327,11 @@ class App extends Component {
                         render={(props) => <HikeContainer
                         hikes={this.state.hikes}
                         likedHikes={this.handleLikedHike}
-                        haveHiked={this.handleHaveHiked} />} />
-                        <Route exact path='/'
+                        haveHiked={this.handleHaveHiked}
+                         />} />
+                        <Route exact path='/search'
                         render={(props) => <SearchContainer
+                        routerProps={props}
                         handleSearch={this.handleSearch}
                         clickSearch={this.clickSearch}/>} />
                         <Route path='/wanttohike'
@@ -357,6 +354,7 @@ class App extends Component {
               </Sidebar.Pusher>
             </Sidebar.Pushable>
       </div>
+
     )
   }
 

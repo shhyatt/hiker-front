@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, Button, Icon, Image } from 'semantic-ui-react'
 
 const Hike = ({hike, likedHikes, haveHiked}) => {
-  console.log(hike);
+  //console.log(hike);
 
 
   return (

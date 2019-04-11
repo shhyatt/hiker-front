@@ -9,16 +9,15 @@ import '../App.css'
 class HikeContainer extends React.Component {
 
   render () {
-    //console.log(this.props);
-    console.log("in hike container");
-  
+    // console.log(this.props);
+    // console.log("in hike container");
+
     return (
       <HikeList
       hikes={this.props.hikes}
       likedHikes={this.props.likedHikes}
-      userWants={this.props.userWants}
-      haveHiked={this.props.haveHiked}
-      userHaves={this.props.userHaves}/>
+
+      haveHiked={this.props.haveHiked} />
     )
   }
 }

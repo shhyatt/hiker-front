@@ -1,5 +1,5 @@
 import React from 'react'
-import WantToHikeList from '../components/HikeList'
+import WantToHikeList from '../components/WantToHikeList'
 
 // import HaveHiked from '../components/HaveHiked'
 // import WantToHike from '../components/WantToHike'
