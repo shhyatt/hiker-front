@@ -318,6 +318,23 @@ class App extends Component {
     })
   }
 
+  handleHikedIt = (id) => {
+    console.log("Hellllooooo", id);
+    //console.log(this.state.wantToHike);
+    let hikeToDelete = this.state.wantToHike.find(hike => hike.user_id === parseInt(localStorage.id) && hike.hike_id === id)
+    //console.log(hikeToDelete.id);
+    fetch(`http://localhost:3000/api/v1/likehikes/${hikeToDelete.id}`, {
+      method: "DELETE"
+    })
+
+    this.handleHaveHiked(id)
+
+  }
+
+
+
+
+
   render() {
     //console.log(this.state.hikes);
     //console.log(this.state.firstName);
@@ -367,7 +384,8 @@ class App extends Component {
                         <Route path='/wanttohike'
                         render={(props) => <WantToHikeContainer
                         userWants={this.state.userWantToHikeHikes}
-                        handleWantToHikeDetail={this.handleWantToHikeDetail}/>} />
+                        handleWantToHikeDetail={this.handleWantToHikeDetail}
+                        handleHikedIt={this.handleHikedIt}/>} />
                         <Route path='/login'
                         render={(props) => <Login
                         handleSignIn={this.handleSignIn}
@@ -386,7 +404,8 @@ class App extends Component {
                         hikeDetail={this.state.haveHikedDetail} />} />
                         <Route path='/wanttohikedetail'
                         render={(props) => <WantToHikeDetail
-                        hikeDetail={this.state.wantToHikeDetail} />} />
+                        hikeDetail={this.state.wantToHikeDetail}
+                        handleHikedIt={this.handleHikedIt} />} />
                         <Route path='/hikedetail'
                         render={(props) => <HikeDetail
                         hikeDetail={this.state.hikeDetail}

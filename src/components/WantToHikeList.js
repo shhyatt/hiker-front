@@ -4,7 +4,7 @@ import WantToHike from './WantToHike'
 
 import { Card } from 'semantic-ui-react'
 
-const WantToHikeList = ({ userWants, handleWantToHikeDetail }) => {
+const WantToHikeList = ({ userWants, handleWantToHikeDetail, handleHikedIt }) => {
 
   //console.log("in Want To Hike List");
 
@@ -14,6 +14,7 @@ const WantToHikeList = ({ userWants, handleWantToHikeDetail }) => {
           key={trail.id}
           trail={trail}
           handleWantToHikeDetail={handleWantToHikeDetail}
+          handleHikedIt={handleHikedIt}
            />)
         return wantHikes
       } else return null
