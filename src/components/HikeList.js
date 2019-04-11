@@ -2,7 +2,7 @@ import React from 'react'
 import Hike from './Hike'
 import { Card } from 'semantic-ui-react'
 
-const HikeList = ({hikes, likedHikes, haveHiked }) => {
+const HikeList = ({hikes, likedHikes, haveHiked, handleHikeDetail }) => {
   //console.log(hikes, "HikeList");
 
 
@@ -15,6 +15,7 @@ const HikeList = ({hikes, likedHikes, haveHiked }) => {
         hike={hike}
         likedHikes={likedHikes}
         haveHiked={haveHiked}
+        handleHikeDetail={handleHikeDetail}
          />)
 
       return newHikes

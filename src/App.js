@@ -12,6 +12,7 @@ import Hike from './components/Hike'
 import Login from './components/Login'
 import HaveHikedDetail from './components/HaveHikedDetail'
 import WantToHikeDetail from './components/WantToHikeDetail'
+import HikeDetail from './components/HikeDetail'
 
 class App extends Component {
   state = {
@@ -34,7 +35,8 @@ class App extends Component {
     userHaveHikedID: [],
     userHaveHikedHikes: [],
     haveHikedDetail: [],
-    wantToHikeDetail: []
+    wantToHikeDetail: [],
+    hikeDetail: []
   }
 
  componentDidMount = () => {
@@ -309,6 +311,13 @@ class App extends Component {
     })
   }
 
+  handleHikeDetail = (trail) => {
+    //console.log("helllloooooo");
+    this.setState({
+      hikeDetail: trail
+    })
+  }
+
   render() {
     //console.log(this.state.hikes);
     //console.log(this.state.firstName);
@@ -348,6 +357,7 @@ class App extends Component {
                         hikes={this.state.hikes}
                         likedHikes={this.handleLikedHike}
                         haveHiked={this.handleHaveHiked}
+                        handleHikeDetail={this.handleHikeDetail}
                          />} />
                         <Route exact path='/search'
                         render={(props) => <SearchContainer
@@ -377,6 +387,9 @@ class App extends Component {
                         <Route path='/wanttohikedetail'
                         render={(props) => <WantToHikeDetail
                         hikeDetail={this.state.wantToHikeDetail} />} />
+                        <Route path='/hikedetail'
+                        render={(props) => <HikeDetail
+                        hikeDetail={this.state.hikeDetail} />} />
                       </Switch>
                     </Segment.Inline>
               </Sidebar.Pusher>

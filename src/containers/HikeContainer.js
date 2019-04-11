@@ -16,7 +16,7 @@ class HikeContainer extends React.Component {
       <HikeList
       hikes={this.props.hikes}
       likedHikes={this.props.likedHikes}
-
+      handleHikeDetail={this.props.handleHikeDetail}
       haveHiked={this.props.haveHiked} />
     )
   }
