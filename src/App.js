@@ -345,7 +345,7 @@ class App extends Component {
             <Menu.Item as={Link} to='/login'>Sign In
                   <Icon name='sign-in alternate' />
             </Menu.Item>
-            <Menu.Item onClick={this.handleLogout}as='a'>Sign Out
+            <Menu.Item onClick={this.handleLogout}as={Link} to='/login'>Sign Out
                   <Icon name='sign-out alternate' />
             </Menu.Item>
               </Sidebar>
@@ -389,7 +389,9 @@ class App extends Component {
                         hikeDetail={this.state.wantToHikeDetail} />} />
                         <Route path='/hikedetail'
                         render={(props) => <HikeDetail
-                        hikeDetail={this.state.hikeDetail} />} />
+                        hikeDetail={this.state.hikeDetail}
+                        likedHikes={this.handleLikedHike}
+                        haveHiked={this.handleHaveHiked} />} />
                       </Switch>
                     </Segment.Inline>
               </Sidebar.Pusher>

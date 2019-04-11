@@ -22,11 +22,11 @@ const HikeDetail = (props) => {
           <p>Elevation High: {props.hikeDetail.high}</p>
           <p>Ascent: {props.hikeDetail.ascent}</p>
           <p>Descent: {props.hikeDetail.descent}</p>
-          <Button>
+          <Button onClick={() => props.likedHikes(props.hikeDetail.id)}>
             <Icon name='thumbs up outline' />
             <p>I want to hike this!</p>
           </Button>
-          <Button>
+          <Button onClick={() => props.haveHiked(props.hikeDetail.id)}>
             <Icon name='check' />
             <p>I have hiked this!</p>
           </Button>

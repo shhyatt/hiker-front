@@ -3,7 +3,7 @@ import { Card, Button, Icon, Image } from 'semantic-ui-react'
 import { Route, Link, Switch } from 'react-router-dom'
 
 const Hike = ({hike, likedHikes, haveHiked, handleHikeDetail }) => {
-  console.log(hike);
+  //console.log(hike);
 
 
   return (
