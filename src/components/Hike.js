@@ -2,7 +2,9 @@ import React from 'react'
 import { Card, Button, Icon, Image } from 'semantic-ui-react'
 
 const Hike = ({hike, likedHikes, haveHiked}) => {
-  //console.log(hike.id);
+  console.log(hike);
+
+
   return (
     <React.Fragment>
         <Card>

@@ -10,6 +10,8 @@ class HikeContainer extends React.Component {
 
   render () {
     //console.log(this.props);
+    console.log("in hike container");
+  
     return (
       <HikeList
       hikes={this.props.hikes}

@@ -5,7 +5,7 @@ class WantToHike extends React.Component {
 
 
   render () {
-    //console.log(this.props.trail);
+    console.log(this.props);
     return (
       <React.Fragment>
           <Card>

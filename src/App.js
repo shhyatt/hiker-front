@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import SearchContainer from './containers/SearchContainer'
 import { Sidebar, Button, Header, Icon, Menu, Segment } from 'semantic-ui-react'
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, Switch } from 'react-router-dom'
 import HikeContainer from './containers/HikeContainer'
+import WantToHikeContainer from './containers/WantToHikeContainer'
+import HaveHikedContainer from './containers/HaveHikedContainer'
 import './App.css'
 import WantToHike from './components/WantToHike'
 import HaveHiked from './components/HaveHiked'
+import Hike from './components/Hike'
 import Login from './components/Login'
 
 class App extends Component {
@@ -41,9 +44,11 @@ class App extends Component {
  }
 
  fetchHikes = () => {
+
    fetch(`https://www.hikingproject.com/data/get-trails?lat=${this.state.latitude}&lon=${this.state.longitude}&maxDistance=100&key=200441896-c10efc088226e872ef079f3ab9990b2f`)
    .then(r => r.json())
    .then(hikes => {
+     window.history.pushState({},"/hikes","/hikes")
          this.setState({
            hikes: hikes
          })
@@ -322,28 +327,35 @@ class App extends Component {
               </Sidebar>
                 <Sidebar.Pusher>
                   <Segment.Inline>
-                  <HikeContainer
-                  hikes={this.state.hikes}
-                  likedHikes={this.handleLikedHike}
-                  userWants={this.state.userWantToHikeHikes}
-                  haveHiked={this.handleHaveHiked}
-                  userHaves={this.state.userHaveHikedHikes}/>
-                  <Route exact path='/' component={SearchContainer} />
-                  <Route path='/wanttohike' component={WantToHike} />
-                  <Route path='/login'
-                  render={(props) => <Login
-                  handleSignIn={this.handleSignIn}
-                  handleSignUp={this.handleSignUp}
-                  firstName={this.state.firstName}
-                  lastName={this.state.lastName}
-                  email={this.state.email}
-                  password={this.state.password}
-                  handleUserChange={this.handleUserChange} />} />
-                  <Route path='/havehiked' component={HaveHiked} />
+                      <Switch>
+                        <Route path='/hikes'
+                        render={(props) => <HikeContainer
+                        hikes={this.state.hikes}
+                        likedHikes={this.handleLikedHike}
+                        haveHiked={this.handleHaveHiked} />} />
+                        <Route exact path='/'
+                        render={(props) => <SearchContainer
+                        handleSearch={this.handleSearch}
+                        clickSearch={this.clickSearch}/>} />
+                        <Route path='/wanttohike'
+                        render={(props) => <WantToHikeContainer
+                        userWants={this.state.userWantToHikeHikes}/>} />
+                        <Route path='/login'
+                        render={(props) => <Login
+                        handleSignIn={this.handleSignIn}
+                        handleSignUp={this.handleSignUp}
+                        firstName={this.state.firstName}
+                        lastName={this.state.lastName}
+                        email={this.state.email}
+                        password={this.state.password}
+                        handleUserChange={this.handleUserChange} />} />
+                        <Route path='/havehiked'
+                        render={(props) => <HaveHikedContainer
+                        userHaves={this.state.userHaveHikedHikes}/>} />
+                      </Switch>
                     </Segment.Inline>
               </Sidebar.Pusher>
             </Sidebar.Pushable>
-
       </div>
     )
   }
