@@ -11,6 +11,7 @@ import HaveHiked from './components/HaveHiked'
 import Hike from './components/Hike'
 import Login from './components/Login'
 import HaveHikedDetail from './components/HaveHikedDetail'
+import WantToHikeDetail from './components/WantToHikeDetail'
 
 class App extends Component {
   state = {
@@ -32,7 +33,8 @@ class App extends Component {
     userHaveHiked: [],
     userHaveHikedID: [],
     userHaveHikedHikes: [],
-    haveHikedDetail: []
+    haveHikedDetail: [],
+    wantToHikeDetail: []
   }
 
  componentDidMount = () => {
@@ -300,6 +302,13 @@ class App extends Component {
     })
   }
 
+  handleWantToHikeDetail = (trail) => {
+    //console.log("Hellllooooooo", trail);
+    this.setState({
+      wantToHikeDetail: trail
+    })
+  }
+
   render() {
     //console.log(this.state.hikes);
     //console.log(this.state.firstName);
@@ -308,7 +317,8 @@ class App extends Component {
     //console.log(this.state.haveHiked);
     //console.log(this.state.userHaveHikedHikes);
     //console.log(this.state.userWantToHikeHikes);
-    console.log(this.state.haveHikedDetail.id);
+    //console.log(this.state.haveHikedDetail.id);
+    //console.log(this.state.wantToHikeDetail);
     return (
       <div className="App">
         <Sidebar.Pushable as={Segment}>
@@ -346,7 +356,8 @@ class App extends Component {
                         clickSearch={this.clickSearch}/>} />
                         <Route path='/wanttohike'
                         render={(props) => <WantToHikeContainer
-                        userWants={this.state.userWantToHikeHikes}/>} />
+                        userWants={this.state.userWantToHikeHikes}
+                        handleWantToHikeDetail={this.handleWantToHikeDetail}/>} />
                         <Route path='/login'
                         render={(props) => <Login
                         handleSignIn={this.handleSignIn}
@@ -363,6 +374,9 @@ class App extends Component {
                         <Route path='/havehikeddetail'
                         render={(props) => <HaveHikedDetail
                         hikeDetail={this.state.haveHikedDetail} />} />
+                        <Route path='/wanttohikedetail'
+                        render={(props) => <WantToHikeDetail
+                        hikeDetail={this.state.wantToHikeDetail} />} />
                       </Switch>
                     </Segment.Inline>
               </Sidebar.Pusher>

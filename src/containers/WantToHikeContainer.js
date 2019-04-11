@@ -15,6 +15,7 @@ class WantToHikeContainer extends React.Component {
     return (
       <WantToHikeList
       userWants={this.props.userWants}
+      handleWantToHikeDetail={this.props.handleWantToHikeDetail}
       />
     )
   }

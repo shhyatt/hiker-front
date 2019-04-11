@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Link, Switch } from 'react-router-dom'
 import { Button, Divider, Grid, Segment, Image, Icon } from 'semantic-ui-react'
 
-const HaveHikedDetail = (props) => {
+const WantToHikeDetail = (props) => {
   //console.log(props);
 
   return (
@@ -23,14 +23,9 @@ const HaveHikedDetail = (props) => {
           <p>Ascent: {props.hikeDetail.ascent}</p>
           <p>Descent: {props.hikeDetail.descent}</p>
           <Button>
-            <Icon name='comments outline' />
-            <p>Add A Comment!</p>
+            <Icon name='check' />
+            <p>I Hiked it!</p>
           </Button>
-          <Button>
-            <Icon name='image' />
-            <p>Add A Photo!</p>
-          </Button>
-
         </Grid.Column>
       </Grid>
 
@@ -44,4 +39,4 @@ const HaveHikedDetail = (props) => {
 
 }
 
-export default HaveHikedDetail
+export default WantToHikeDetail
