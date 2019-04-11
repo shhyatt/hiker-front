@@ -15,6 +15,7 @@ class HaveHikedContainer extends React.Component {
     return (
       <HaveHikedList
       userHaves={this.props.userHaves}
+      handleHaveHikedDetail={this.props.handleHaveHikedDetail}
       />
     )
   }

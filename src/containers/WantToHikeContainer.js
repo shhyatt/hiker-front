@@ -9,8 +9,8 @@ import '../App.css'
 class WantToHikeContainer extends React.Component {
 
   render () {
-    console.log(this.props);
-    console.log("in WantTohike container");
+    // console.log(this.props);
+    // console.log("in WantTohike container");
 
     return (
       <WantToHikeList

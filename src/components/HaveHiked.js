@@ -1,21 +1,30 @@
 import React from 'react'
-import { Card, Image } from 'semantic-ui-react'
+import { Route, Link, Switch } from 'react-router-dom'
+import { Card, Image, Button, Icon } from 'semantic-ui-react'
 
 class HaveHiked extends React.Component {
 
 
   render () {
-    //console.log(this.props);
+    //console.log(this.props.trail);
     return (
 
       <React.Fragment>
           <Card>
-            <Card.Content>
+            <Card.Content onClick={() => this.props.handleHaveHikedDetail(this.props.trail)} as={Link} to={"/havehikeddetail"}>
             <Card.Header>{this.props.trail.name}</Card.Header>
             <h5>{this.props.trail.location}</h5>
             <h5>{this.props.trail.summary}</h5>
+            <Image src={this.props.trail.imgSmall} style={{width:'150px'}} alt={this.props.trail.name}/>
             </Card.Content>
-          <Image src={this.props.trail.imgSmall} style={{width:'150px'}} alt={this.props.trail.name}/>
+          <Button>
+            <Icon name='comments outline' />
+            <p>Add A Comment!</p>
+          </Button>
+          <Button>
+            <Icon name='image' />
+            <p>Add A Photo!</p>
+          </Button>
           </Card>
       </React.Fragment>
      )

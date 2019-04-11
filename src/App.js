@@ -10,6 +10,7 @@ import WantToHike from './components/WantToHike'
 import HaveHiked from './components/HaveHiked'
 import Hike from './components/Hike'
 import Login from './components/Login'
+import HaveHikedDetail from './components/HaveHikedDetail'
 
 class App extends Component {
   state = {
@@ -30,7 +31,8 @@ class App extends Component {
     userWantToHikeHikes: [],
     userHaveHiked: [],
     userHaveHikedID: [],
-    userHaveHikedHikes: []
+    userHaveHikedHikes: [],
+    haveHikedDetail: []
   }
 
  componentDidMount = () => {
@@ -291,6 +293,13 @@ class App extends Component {
     })
   }
 
+  handleHaveHikedDetail = (trail) => {
+    //console.log("Helllooooo", trail);
+    this.setState({
+      haveHikedDetail: trail
+    })
+  }
+
   render() {
     //console.log(this.state.hikes);
     //console.log(this.state.firstName);
@@ -298,7 +307,8 @@ class App extends Component {
     //console.log(this.state.userWantToHikeHikes);
     //console.log(this.state.haveHiked);
     //console.log(this.state.userHaveHikedHikes);
-    console.log(this.state.userWantToHikeHikes);
+    //console.log(this.state.userWantToHikeHikes);
+    console.log(this.state.haveHikedDetail.id);
     return (
       <div className="App">
         <Sidebar.Pushable as={Segment}>
@@ -348,7 +358,11 @@ class App extends Component {
                         handleUserChange={this.handleUserChange} />} />
                         <Route path='/havehiked'
                         render={(props) => <HaveHikedContainer
-                        userHaves={this.state.userHaveHikedHikes}/>} />
+                        userHaves={this.state.userHaveHikedHikes}
+                        handleHaveHikedDetail={this.handleHaveHikedDetail}/>} />
+                        <Route path='/havehikeddetail'
+                        render={(props) => <HaveHikedDetail
+                        hikeDetail={this.state.haveHikedDetail} />} />
                       </Switch>
                     </Segment.Inline>
               </Sidebar.Pusher>
