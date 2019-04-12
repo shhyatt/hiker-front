@@ -3,7 +3,7 @@ import { Route, Link, Switch } from 'react-router-dom'
 import { Button, Divider, Grid, Segment, Image, Icon } from 'semantic-ui-react'
 
 const WantToHikeDetail = (props) => {
-  console.log(props.hikeDetail.id);
+  //console.log(props.hikeDetail.id);
 
   return (
     <Segment>

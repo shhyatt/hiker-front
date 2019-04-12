@@ -10,7 +10,7 @@ import WantToHike from './components/WantToHike'
 import HaveHiked from './components/HaveHiked'
 import Hike from './components/Hike'
 import Login from './components/Login'
-import HaveHikedDetail from './components/HaveHikedDetail'
+import HaveHikedDetailContainer from './containers/HaveHikedDetailContainer'
 import WantToHikeDetail from './components/WantToHikeDetail'
 import HikeDetail from './components/HikeDetail'
 import CommentForm from './components/CommentForm'
@@ -40,7 +40,8 @@ class App extends Component {
     hikeDetail: [],
     commentHikeID: [],
     comment: "",
-    comments: []
+    comments: [],
+    haveHikedDetailComments: []
   }
 
  componentDidMount = () => {
@@ -317,6 +318,7 @@ class App extends Component {
     this.setState({
       haveHikedDetail: trail
     })
+    this.filterComments(trail.id)
   }
 
   handleWantToHikeDetail = (trail) => {
@@ -384,6 +386,15 @@ class App extends Component {
     })
   }
 
+  filterComments = (id) => {
+    let filteredComments = this.state.comments.filter(comment => comment.hike_id === id)
+    this.setState({
+      haveHikedDetailComments: filteredComments
+    })
+
+
+  }
+
   render() {
     //console.log(this.state.hikes);
     //console.log(this.state.firstName);
@@ -396,6 +407,7 @@ class App extends Component {
     //console.log(this.state.wantToHikeDetail);
     //console.log(this.state.comment);
     //console.log(this.state.commentHikeID);
+    //console.log(this.state.haveHikedDetailComments);
     return (
       <div className="App">
         <Sidebar.Pushable as={Segment}>
@@ -452,8 +464,9 @@ class App extends Component {
                         handleAddComment={this.handleAddComment}
                         handleHaveHikedDetail={this.handleHaveHikedDetail}/>} />
                         <Route path='/havehikeddetail'
-                        render={(props) => <HaveHikedDetail
-                        hikeDetail={this.state.haveHikedDetail} />} />
+                        render={(props) => <HaveHikedDetailContainer
+                        hikeDetail={this.state.haveHikedDetail}
+                        comments={this.state.haveHikedDetailComments} />} />
                         <Route path='/wanttohikedetail'
                         render={(props) => <WantToHikeDetail
                         hikeDetail={this.state.wantToHikeDetail}

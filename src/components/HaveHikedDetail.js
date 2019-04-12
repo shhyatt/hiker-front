@@ -3,9 +3,9 @@ import { Route, Link, Switch } from 'react-router-dom'
 import { Button, Divider, Grid, Segment, Image, Icon } from 'semantic-ui-react'
 
 const HaveHikedDetail = (props) => {
-  //console.log(props);
-
+  
   return (
+
     <Segment>
       <Grid columns={2} relaxed='very' stackable>
         <Grid.Column>
