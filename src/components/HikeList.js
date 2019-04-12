@@ -16,6 +16,7 @@ const HikeList = ({hikes, likedHikes, haveHiked, handleHikeDetail }) => {
         likedHikes={likedHikes}
         haveHiked={haveHiked}
         handleHikeDetail={handleHikeDetail}
+
          />)
 
       return newHikes

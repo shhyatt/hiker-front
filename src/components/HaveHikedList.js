@@ -4,7 +4,7 @@ import HaveHiked from './HaveHiked'
 
 import { Card } from 'semantic-ui-react'
 
-const HaveHikedList = ({ userHaves, handleHaveHikedDetail }) => {
+const HaveHikedList = ({ userHaves, handleHaveHikedDetail, handleAddComment }) => {
 
 
 
@@ -14,6 +14,7 @@ const HaveHikedList = ({ userHaves, handleHaveHikedDetail }) => {
           key={trail.id}
           trail={trail}
           handleHaveHikedDetail={handleHaveHikedDetail}
+          handleAddComment={handleAddComment}
            />)
         return haveHiked
       } else return null

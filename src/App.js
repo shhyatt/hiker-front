@@ -331,8 +331,9 @@ class App extends Component {
 
   }
 
-
-
+  handleAddComment = () => {
+    console.log("Hello!!!!");
+  }
 
 
   render() {
@@ -398,6 +399,7 @@ class App extends Component {
                         <Route path='/havehiked'
                         render={(props) => <HaveHikedContainer
                         userHaves={this.state.userHaveHikedHikes}
+                        handleAddComment={this.handleAddComment}
                         handleHaveHikedDetail={this.handleHaveHikedDetail}/>} />
                         <Route path='/havehikeddetail'
                         render={(props) => <HaveHikedDetail
