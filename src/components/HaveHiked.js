@@ -6,7 +6,7 @@ class HaveHiked extends React.Component {
 
 
   render () {
-    console.log(this.props);
+    //console.log(this.props);
     return (
 
       <React.Fragment>
@@ -17,7 +17,7 @@ class HaveHiked extends React.Component {
             <h5>{this.props.trail.summary}</h5>
             <Image src={this.props.trail.imgSmall} style={{width:'150px'}} alt={this.props.trail.name}/>
             </Card.Content>
-          <Button onClick={this.props.handleAddComment}>
+          <Button onClick={() => this.props.handleAddComment(this.props.trail.id)}as={Link} to={"/commentform"}>
             <Icon name='comments outline' />
             <p>Add A Comment!</p>
           </Button>

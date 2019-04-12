@@ -13,6 +13,7 @@ import Login from './components/Login'
 import HaveHikedDetail from './components/HaveHikedDetail'
 import WantToHikeDetail from './components/WantToHikeDetail'
 import HikeDetail from './components/HikeDetail'
+import CommentForm from './components/CommentForm'
 
 class App extends Component {
   state = {
@@ -36,7 +37,10 @@ class App extends Component {
     userHaveHikedHikes: [],
     haveHikedDetail: [],
     wantToHikeDetail: [],
-    hikeDetail: []
+    hikeDetail: [],
+    commentHikeID: [],
+    comment: "",
+    comments: []
   }
 
  componentDidMount = () => {
@@ -47,6 +51,7 @@ class App extends Component {
    this.fetchUserWantHikes()
    this.fetchHaveHiked()
    this.fetchUserHaveHiked()
+   this.fetchComments()
  }
 
  fetchHikes = (routerProps) => {
@@ -96,7 +101,7 @@ class App extends Component {
     })
   }
 
-  filterLikedHikes = () => {
+ filterLikedHikes = () => {
     let userHikes = this.state.wantToHike.filter(hike => hike.user_id === parseInt(localStorage.id))
     //console.log(userHikes);
     this.setState({
@@ -105,7 +110,7 @@ class App extends Component {
     this.getUserLikeIDs()
   }
 
-  getUserLikeIDs = () => {
+ getUserLikeIDs = () => {
     let ids = this.state.userWantToHike.map(hike => hike.hike_id)
     //console.log(ids);
     this.setState({
@@ -164,6 +169,16 @@ class App extends Component {
      //console.log(data);
    })
 
+ }
+
+ fetchComments = () => {
+   fetch("http://localhost:3000/api/v1/comments")
+   .then(r => r.json())
+   .then(comments => {
+     this.setState({
+       comments: comments
+     })
+   })
  }
 
  handleSearch = (e) => {
@@ -319,7 +334,7 @@ class App extends Component {
   }
 
   handleHikedIt = (id) => {
-    console.log("Hellllooooo", id);
+    //console.log("Hellllooooo", id);
     //console.log(this.state.wantToHike);
     let hikeToDelete = this.state.wantToHike.find(hike => hike.user_id === parseInt(localStorage.id) && hike.hike_id === id)
     //console.log(hikeToDelete.id);
@@ -331,10 +346,43 @@ class App extends Component {
 
   }
 
-  handleAddComment = () => {
-    console.log("Hello!!!!");
+  handleAddComment = (id) => {
+    this.setState({
+      commentHikeID: id
+    })
+    //console.log("Hello!!!!", id);
   }
 
+  handleComment = (e) => {
+    this.setState({
+      comment: e.target.value
+    })
+
+  }
+  handlePostComment = () => {
+    //console.log("Posting...");
+    let haveHikedID = this.state.haveHiked.find(hike => hike.user_id === parseInt(localStorage.id) && hike.hike_id === this.state.commentHikeID)
+    //console.log(haveHikedID.id);
+    fetch("http://localhost:3000/api/v1/comments", {
+      method: "POST",
+      headers: {
+       'Content-Type': 'application/json',
+       'Accepts': 'application/json'
+      },
+      body: JSON.stringify({
+        content: this.state.comment,
+        user_id: localStorage.id,
+        hike_id: this.state.commentHikeID,
+        havehike_id: haveHikedID.id
+      })
+    })
+    .then(r => r.json())
+    .then(data => {
+      this.setState({
+        comments: [...this.state.comments, data]
+      })
+    })
+  }
 
   render() {
     //console.log(this.state.hikes);
@@ -346,6 +394,8 @@ class App extends Component {
     //console.log(this.state.userWantToHikeHikes);
     //console.log(this.state.haveHikedDetail.id);
     //console.log(this.state.wantToHikeDetail);
+    //console.log(this.state.comment);
+    //console.log(this.state.commentHikeID);
     return (
       <div className="App">
         <Sidebar.Pushable as={Segment}>
@@ -413,6 +463,11 @@ class App extends Component {
                         hikeDetail={this.state.hikeDetail}
                         likedHikes={this.handleLikedHike}
                         haveHiked={this.handleHaveHiked} />} />
+                        <Route path='/commentform'
+                        render={(props) => <CommentForm
+                        hikeID={this.state.commentHikeID}
+                        handleComment={this.handleComment}
+                        handlePostComment={this.handlePostComment} />} />
                       </Switch>
                     </Segment.Inline>
               </Sidebar.Pusher>
