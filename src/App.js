@@ -11,6 +11,7 @@ import HaveHiked from './components/HaveHiked'
 import Hike from './components/Hike'
 import Login from './components/Login'
 import HaveHikedDetailContainer from './containers/HaveHikedDetailContainer'
+import WantToHikeDetailContainer from './containers/WantToHikeDetailContainer'
 import WantToHikeDetail from './components/WantToHikeDetail'
 import HikeDetail from './components/HikeDetail'
 import CommentForm from './components/CommentForm'
@@ -41,7 +42,8 @@ class App extends Component {
     commentHikeID: [],
     comment: "",
     comments: [],
-    haveHikedDetailComments: []
+    detailComments: []
+
   }
 
  componentDidMount = () => {
@@ -326,6 +328,7 @@ class App extends Component {
     this.setState({
       wantToHikeDetail: trail
     })
+    this.filterComments(trail.id)
   }
 
   handleHikeDetail = (trail) => {
@@ -389,7 +392,7 @@ class App extends Component {
   filterComments = (id) => {
     let filteredComments = this.state.comments.filter(comment => comment.hike_id === id)
     this.setState({
-      haveHikedDetailComments: filteredComments
+      detailComments: filteredComments
     })
 
 
@@ -466,11 +469,12 @@ class App extends Component {
                         <Route path='/havehikeddetail'
                         render={(props) => <HaveHikedDetailContainer
                         hikeDetail={this.state.haveHikedDetail}
-                        comments={this.state.haveHikedDetailComments} />} />
+                        comments={this.state.detailComments} />} />
                         <Route path='/wanttohikedetail'
-                        render={(props) => <WantToHikeDetail
+                        render={(props) => <WantToHikeDetailContainer
                         hikeDetail={this.state.wantToHikeDetail}
-                        handleHikedIt={this.handleHikedIt} />} />
+                        handleHikedIt={this.handleHikedIt}
+                        comments={this.state.detailComments} />} />
                         <Route path='/hikedetail'
                         render={(props) => <HikeDetail
                         hikeDetail={this.state.hikeDetail}
