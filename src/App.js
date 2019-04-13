@@ -12,6 +12,8 @@ import Hike from './components/Hike'
 import Login from './components/Login'
 import HaveHikedDetailContainer from './containers/HaveHikedDetailContainer'
 import WantToHikeDetailContainer from './containers/WantToHikeDetailContainer'
+import HikeDetailContainer from './containers/HikeDetailContainer'
+
 import WantToHikeDetail from './components/WantToHikeDetail'
 import HikeDetail from './components/HikeDetail'
 import CommentForm from './components/CommentForm'
@@ -336,6 +338,7 @@ class App extends Component {
     this.setState({
       hikeDetail: trail
     })
+    this.filterComments(trail.id)
   }
 
   handleHikedIt = (id) => {
@@ -476,10 +479,11 @@ class App extends Component {
                         handleHikedIt={this.handleHikedIt}
                         comments={this.state.detailComments} />} />
                         <Route path='/hikedetail'
-                        render={(props) => <HikeDetail
+                        render={(props) => <HikeDetailContainer
                         hikeDetail={this.state.hikeDetail}
                         likedHikes={this.handleLikedHike}
-                        haveHiked={this.handleHaveHiked} />} />
+                        haveHiked={this.handleHaveHiked}
+                        comments={this.state.detailComments} />} />
                         <Route path='/commentform'
                         render={(props) => <CommentForm
                         hikeID={this.state.commentHikeID}
