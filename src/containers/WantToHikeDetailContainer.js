@@ -1,6 +1,7 @@
 import React from 'react'
 import WantToHikeDetail from '../components/WantToHikeDetail'
 import ShowCommentsList from '../components/ShowCommentsList'
+import ShowPhotosList from '../components/ShowPhotosList'
 import { Divider, Segment } from 'semantic-ui-react'
 
 class WantToHikeDetailContainer extends React.Component {
@@ -15,6 +16,9 @@ class WantToHikeDetailContainer extends React.Component {
        <Divider horizontal></Divider>
        <ShowCommentsList
         comments={this.props.comments} />
+        <Divider horizontal></Divider>
+      <ShowPhotosList
+        photos={this.props.photos} />
      </Segment>
 
     )

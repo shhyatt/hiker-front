@@ -17,6 +17,7 @@ import HikeDetailContainer from './containers/HikeDetailContainer'
 import WantToHikeDetail from './components/WantToHikeDetail'
 import HikeDetail from './components/HikeDetail'
 import CommentForm from './components/CommentForm'
+import PhotoForm from './components/PhotoForm'
 
 class App extends Component {
   state = {
@@ -44,7 +45,11 @@ class App extends Component {
     commentHikeID: [],
     comment: "",
     comments: [],
-    detailComments: []
+    detailComments: [],
+    photoHikeID: [],
+    photoLink: "",
+    photos: [],
+    detailPhotos: []
 
   }
 
@@ -57,6 +62,7 @@ class App extends Component {
    this.fetchHaveHiked()
    this.fetchUserHaveHiked()
    this.fetchComments()
+   this.fetchPhotos()
  }
 
  fetchHikes = (routerProps) => {
@@ -186,6 +192,16 @@ class App extends Component {
    })
  }
 
+ fetchPhotos = () => {
+   fetch("http://localhost:3000/api/v1/photos")
+   .then(r => r.json())
+   .then(photos => {
+     this.setState({
+       photos: photos
+     })
+   })
+ }
+
  handleSearch = (e) => {
    //console.log(e.target.value);
   this.setState({
@@ -263,12 +279,25 @@ class App extends Component {
       lastName: "",
       email: "",
       password: "",
-      hikes: [],
-      searchedState: "",
       haveHiked: [],
       wantToHike: [],
       userWantToHike: [],
-      userWantToHikeHikes: []
+      userWantHikeID: [],
+      userWantToHikeHikes: [],
+      userHaveHiked: [],
+      userHaveHikedID: [],
+      userHaveHikedHikes: [],
+      haveHikedDetail: [],
+      wantToHikeDetail: [],
+      hikeDetail: [],
+      commentHikeID: [],
+      comment: "",
+      comments: [],
+      detailComments: [],
+      photoHikeID: [],
+      photoLink: "",
+      photos: [],
+      detailPhotos: []
     })
     //console.log("hello!");
   }
@@ -323,6 +352,7 @@ class App extends Component {
       haveHikedDetail: trail
     })
     this.filterComments(trail.id)
+    this.filterPhotos(trail.id)
   }
 
   handleWantToHikeDetail = (trail) => {
@@ -331,6 +361,7 @@ class App extends Component {
       wantToHikeDetail: trail
     })
     this.filterComments(trail.id)
+    this.filterPhotos(trail.id)
   }
 
   handleHikeDetail = (trail) => {
@@ -339,6 +370,7 @@ class App extends Component {
       hikeDetail: trail
     })
     this.filterComments(trail.id)
+    this.filterPhotos(trail.id)
   }
 
   handleHikedIt = (id) => {
@@ -397,7 +429,51 @@ class App extends Component {
     this.setState({
       detailComments: filteredComments
     })
+  }
 
+  handleAddAPhoto = (id) => {
+    //console.log("Hellooooo");
+    this.setState({
+      photoHikeID: id
+    })
+  }
+
+  handlePhoto = (e) => {
+    this.setState({
+      photoLink: e.target.value
+    })
+    //console.log(e.target.value);
+  }
+
+  handlePostPhoto = () => {
+    //console.log("Helllooooooo");
+    let haveHikedID = this.state.haveHiked.find(hike => hike.user_id === parseInt(localStorage.id) && hike.hike_id === this.state.photoHikeID)
+    fetch("http://localhost:3000/api/v1/photos", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Accepts': 'application/json'
+      },
+      body: JSON.stringify({
+        img: this.state.photoLink,
+        user_id: localStorage.id,
+        hike_id: this.state.photoHikeID,
+        havehike_id: haveHikedID.id
+      })
+    })
+    .then(r => r.json())
+    .then(data => {
+      this.setState({
+        photos: [...this.state.photos, data]
+      })
+    })
+  }
+
+  filterPhotos = (id) => {
+    let filteredPhotos = this.state.photos.filter(photo => photo.hike_id === id)
+    this.setState({
+      detailPhotos: filteredPhotos
+    })
 
   }
 
@@ -414,6 +490,9 @@ class App extends Component {
     //console.log(this.state.comment);
     //console.log(this.state.commentHikeID);
     //console.log(this.state.haveHikedDetailComments);
+    //console.log(this.state.photoHikeID);
+    //console.log(this.state.photoLink);
+    console.log(this.state.firstName);
     return (
       <div className="App">
         <Sidebar.Pushable as={Segment}>
@@ -468,27 +547,36 @@ class App extends Component {
                         render={(props) => <HaveHikedContainer
                         userHaves={this.state.userHaveHikedHikes}
                         handleAddComment={this.handleAddComment}
+                        handleAddAPhoto={this.handleAddAPhoto}
                         handleHaveHikedDetail={this.handleHaveHikedDetail}/>} />
                         <Route path='/havehikeddetail'
                         render={(props) => <HaveHikedDetailContainer
                         hikeDetail={this.state.haveHikedDetail}
-                        comments={this.state.detailComments} />} />
+                        comments={this.state.detailComments}
+                        photos={this.state.detailPhotos} />} />
                         <Route path='/wanttohikedetail'
                         render={(props) => <WantToHikeDetailContainer
                         hikeDetail={this.state.wantToHikeDetail}
                         handleHikedIt={this.handleHikedIt}
-                        comments={this.state.detailComments} />} />
+                        comments={this.state.detailComments}
+                        photos={this.state.detailPhotos} />} />
                         <Route path='/hikedetail'
                         render={(props) => <HikeDetailContainer
                         hikeDetail={this.state.hikeDetail}
                         likedHikes={this.handleLikedHike}
                         haveHiked={this.handleHaveHiked}
-                        comments={this.state.detailComments} />} />
+                        comments={this.state.detailComments}
+                        photos={this.state.detailPhotos} />} />
                         <Route path='/commentform'
                         render={(props) => <CommentForm
                         hikeID={this.state.commentHikeID}
                         handleComment={this.handleComment}
                         handlePostComment={this.handlePostComment} />} />
+                        <Route path='/photoform'
+                        render={(props) => <PhotoForm
+                        photoID={this.state.photoHikeID}
+                        handlePhoto={this.handlePhoto}
+                        handlePostPhoto={this.handlePostPhoto} />} />
                       </Switch>
                     </Segment.Inline>
               </Sidebar.Pusher>
@@ -510,3 +598,5 @@ export default App;
 //             handleLogin={this.handleLogin}
 //           />}
 //         />
+
+//https://wendycollier.com/wp-content/uploads/2014/05/Trail.jpg

@@ -12,6 +12,7 @@ class HaveHikedContainer extends React.Component {
       userHaves={this.props.userHaves}
       handleHaveHikedDetail={this.props.handleHaveHikedDetail}
       handleAddComment={this.props.handleAddComment}
+      handleAddAPhoto={this.props.handleAddAPhoto}
       />
     )
   }

@@ -21,7 +21,7 @@ class HaveHiked extends React.Component {
             <Icon name='comments outline' />
             <p>Add A Comment!</p>
           </Button>
-          <Button>
+          <Button onClick={() => this.props.handleAddAPhoto(this.props.trail.id)}as={Link}to={"/photoform"}>
             <Icon name='image' />
             <p>Add A Photo!</p>
           </Button>
