@@ -7,12 +7,13 @@ import { Divider, Segment } from 'semantic-ui-react'
 class WantToHikeDetailContainer extends React.Component {
 
   render () {
-    //console.log(this.props);
+    console.log(this.props);
 
     return (
      <Segment>
        <WantToHikeDetail
-       hikeDetail={this.props.hikeDetail}/>
+       hikeDetail={this.props.hikeDetail}
+       handleHikedIt={this.props.handleHikedIt}/>
        <Divider horizontal></Divider>
        <ShowCommentsList
         comments={this.props.comments} />

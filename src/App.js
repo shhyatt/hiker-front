@@ -553,7 +553,9 @@ class App extends Component {
                         render={(props) => <HaveHikedDetailContainer
                         hikeDetail={this.state.haveHikedDetail}
                         comments={this.state.detailComments}
-                        photos={this.state.detailPhotos} />} />
+                        photos={this.state.detailPhotos}
+                        handleAddComment={this.handleAddComment}
+                        handleAddAPhoto={this.handleAddAPhoto}/>} />
                         <Route path='/wanttohikedetail'
                         render={(props) => <WantToHikeDetailContainer
                         hikeDetail={this.state.wantToHikeDetail}

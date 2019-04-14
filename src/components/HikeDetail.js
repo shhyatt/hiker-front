@@ -3,7 +3,8 @@ import { Route, Link, Switch } from 'react-router-dom'
 import { Button, Divider, Grid, Segment, Image, Icon } from 'semantic-ui-react'
 
 const HikeDetail = (props) => {
-  //console.log(props);
+
+  console.log(props);
 
   return (
     <Segment>
@@ -22,7 +23,7 @@ const HikeDetail = (props) => {
           <p>Elevation High: {props.hikeDetail.high}</p>
           <p>Ascent: {props.hikeDetail.ascent}</p>
           <p>Descent: {props.hikeDetail.descent}</p>
-          <Button onClick={() => props.likedHikes(props.hikeDetail.id)}>
+          <Button onClick={() => props.likeHike(props.hikeDetail.id)}>
             <Icon name='thumbs up outline' />
             <p>I want to hike this!</p>
           </Button>

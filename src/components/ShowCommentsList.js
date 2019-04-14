@@ -2,7 +2,7 @@ import React from 'react'
 import ShowComments from './ShowComments'
 
 const ShowCommentsList = (props) => {
-  console.log(props);
+  //console.log(props);
 
   const renderComments = () =>  props.comments.map(comment => <ShowComments key={comment.id}
   comment={comment} />)

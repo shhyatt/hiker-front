@@ -7,12 +7,15 @@ import ShowPhotosList from '../components/ShowPhotosList'
 class HikeDetailContainer extends React.Component {
 
   render () {
+
     //console.log(this.props);
 
     return (
      <Segment>
        <HikeDetail
-       hikeDetail={this.props.hikeDetail}/>
+       hikeDetail={this.props.hikeDetail}
+       haveHiked={this.props.haveHiked}
+       likeHike={this.props.likedHikes}/>
        <Divider horizontal></Divider>
        <ShowCommentsList
         comments={this.props.comments} />
