@@ -65,6 +65,15 @@ class App extends Component {
    this.fetchPhotos()
  }
 
+ componentDidUpdate(prevProps, prevState) {
+   if(prevState.wantToHike !== this.state.wantToHike){
+     return this.likedHikes()
+   }
+   if(prevState.haveHiked !== this.state.haveHiked){
+     return this.fetchHaveHiked()
+   }
+ }
+
  fetchHikes = (routerProps) => {
 
    fetch(`https://www.hikingproject.com/data/get-trails?lat=${this.state.latitude}&lon=${this.state.longitude}&maxDistance=100&key=200441896-c10efc088226e872ef079f3ab9990b2f`)
@@ -374,16 +383,23 @@ class App extends Component {
   }
 
   handleHikedIt = (id) => {
-    //console.log("Hellllooooo", id);
+    console.log("Hellllooooo inHiked it!", id);
     //console.log(this.state.wantToHike);
     let hikeToDelete = this.state.wantToHike.find(hike => hike.user_id === parseInt(localStorage.id) && hike.hike_id === id)
+    let index = this.state.wantToHike.indexOf(hikeToDelete)
+    let newHikes = this.state.wantToHike
+    let deleteHike = newHikes.splice(index, 1)
+    this.setState({
+      wantToHike: newHikes
+    })
     //console.log(hikeToDelete.id);
     fetch(`http://localhost:3000/api/v1/likehikes/${hikeToDelete.id}`, {
       method: "DELETE"
     })
 
-    this.handleHaveHiked(id)
+    this.likedHikes()
 
+    this.handleHaveHiked(id)
   }
 
   handleAddComment = (id) => {
@@ -478,21 +494,6 @@ class App extends Component {
   }
 
   render() {
-    //console.log(this.state.hikes);
-    //console.log(this.state.firstName);
-    //console.log(this.state.userWantToHike);
-    //console.log(this.state.userWantToHikeHikes);
-    //console.log(this.state.haveHiked);
-    //console.log(this.state.userHaveHikedHikes);
-    //console.log(this.state.userWantToHikeHikes);
-    //console.log(this.state.haveHikedDetail.id);
-    //console.log(this.state.wantToHikeDetail);
-    //console.log(this.state.comment);
-    //console.log(this.state.commentHikeID);
-    //console.log(this.state.haveHikedDetailComments);
-    //console.log(this.state.photoHikeID);
-    //console.log(this.state.photoLink);
-    console.log(this.state.firstName);
     return (
       <div className="App">
         <Sidebar.Pushable as={Segment}>
@@ -592,13 +593,5 @@ class App extends Component {
 
 export default App;
 
-// <Route path="/login"
-//           render={(props) => <Login
-//             email={this.state.email}
-//             password={this.state.password}
-//             handleChange={this.handleChange}
-//             handleLogin={this.handleLogin}
-//           />}
-//         />
 
 //https://wendycollier.com/wp-content/uploads/2014/05/Trail.jpg
