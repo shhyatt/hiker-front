@@ -49,7 +49,11 @@ class App extends Component {
     photoHikeID: [],
     photoLink: "",
     photos: [],
-    detailPhotos: []
+    detailPhotos: [],
+    address: "",
+    city: "",
+    state: "",
+    coordinateData: []
 
   }
 
@@ -63,16 +67,17 @@ class App extends Component {
    this.fetchUserHaveHiked()
    this.fetchComments()
    this.fetchPhotos()
+   this.fetchCoords()
  }
 
- componentDidUpdate(prevProps, prevState) {
-   if(prevState.wantToHike !== this.state.wantToHike){
-     return this.likedHikes()
-   }
-   if(prevState.haveHiked !== this.state.haveHiked){
-     return this.fetchHaveHiked()
-   }
- }
+ // componentDidUpdate(prevProps, prevState) {
+ //   if(prevState.wantToHike !== this.state.wantToHike){
+ //     return this.likedHikes()
+ //   }
+ //   if(prevState.haveHiked !== this.state.haveHiked){
+ //     return this.fetchHaveHiked()
+ //   }
+ // }
 
  fetchHikes = (routerProps) => {
 
@@ -211,26 +216,61 @@ class App extends Component {
    })
  }
 
- handleSearch = (e) => {
+ handleSearch = (event) => {
    //console.log(e.target.value);
-  this.setState({
-    searchedState: e.target.value
-  })
+  this.setState({[event.target.name]: event.target.value}, () => this.fetchCoords())
  }
 
  clickSearch = (e, routerProps) => {
    e.preventDefault()
-   this.state.unitedStates.find(area => {
+   // console.log(this.state.longitude);
+   // console.log(this.state.latitude);
+   this.fetchHikes(routerProps)
 
-      if(this.state.searchedState === area.name){
-        return this.setState({
-          latitude: area.latitude,
-          longitude: area.longitude
-        }, () => this.fetchHikes(routerProps) )
+  }
 
-      }
+ fetchCoords = () => {
+   //console.log("in fetch", this.state.address.split(" ")[0]);
+   let address = this.state.address
+   let firstPart = address.split(" ")[0]
+   let secondPart = address.split(" ")[1]
+   //console.log("1st", firstPart, "2nd", secondPart);
+
+
+   fetch(`https://geocoder.api.here.com/6.2/geocode.json?searchtext=${firstPart}%20S%20${secondPart}%20${this.state.city}%20${this.state.state}&app_id=PFQ8m7mjnf4JAc0SpO4G&app_code=9zZkpoWGiYzGCkvVg0-EHw&gen=9`)
+   .then(r => r.json())
+   .then(coordinateData => {
+     //console.log(coordinteData.Response.View[0]);
+     this.setState({
+       coordinateData: coordinateData
+     }, this.getCoords)
    })
+
+   //console.log(this.state.coordinateData, "256");
  }
+
+  getCoords = () => {
+    //console.log("ingetCoords", this.state.coordinateData.Response);
+    let data = this.state.coordinateData
+
+    let position = data.Response.View[0]
+
+    if(position !== undefined){
+      let coordinates = position.Result[0].Location.DisplayPosition
+      this.setState({
+        latitude: coordinates.Latitude,
+        longitude: coordinates.Longitude,
+      })
+      //console.log(coordinates);
+      return coordinates
+    } else return null
+
+    //console.log(data, "261");
+
+  }
+ //this.state.address.split(" ")[0]
+ //this.address.split(" ")[1]+this.address.split(" ")[2]
+ //data.Response.View[0].Result[0].Location.DisplayPosition
 
   handleSignIn = (event) => {
     event.preventDefault()
@@ -493,7 +533,11 @@ class App extends Component {
 
   }
 
+  //https://geocoder.api.here.com/6.2/geocode.json?searchtext=200%20S%20Mathilda%20Sunnyvale%20CA&app_id=devportal-demo-20180625&app_code=9v2BkviRwi9Ot26kp2IysQ&gen=9
+
+  //console.log(data.Response.View[0].Result[0].Location.DisplayPosition);
   render() {
+
     return (
       <div className="App">
         <Sidebar.Pushable as={Segment}>
@@ -529,7 +573,10 @@ class App extends Component {
                         render={(props) => <SearchContainer
                         routerProps={props}
                         handleSearch={this.handleSearch}
-                        clickSearch={this.clickSearch}/>} />
+                        clickSearch={this.clickSearch}
+                        address={this.state.address}
+                        city={this.state.city}
+                        state={this.state.state}/>} />
                         <Route path='/wanttohike'
                         render={(props) => <WantToHikeContainer
                         userWants={this.state.userWantToHikeHikes}
@@ -595,3 +642,6 @@ export default App;
 
 
 //https://wendycollier.com/wp-content/uploads/2014/05/Trail.jpg
+
+//app id = PFQ8m7mjnf4JAc0SpO4G
+//app code = 9zZkpoWGiYzGCkvVg0-EHw

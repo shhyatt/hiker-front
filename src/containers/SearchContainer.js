@@ -15,8 +15,16 @@ class SearchContainer extends React.Component {
       <Form>
         <Header as="h3">Search for a Hike!</Header>
         <Form.Field>
-        <label>Search By State:</label>
-        <input type="text" onChange={(e) => this.props.handleSearch(e)}/>
+        <label>Enter An Address:</label>
+        <input type="text" name='address' onChange={this.props.handleSearch} value={this.props.address} placeholder='Street Address'/>
+        </Form.Field>
+        <Form.Field>
+          <label>City</label>
+          <input type="text" name='city' onChange={this.props.handleSearch} value={this.props.city} placeholder='City' />
+        </Form.Field>
+        <Form.Field>
+          <label>State</label>
+          <input type='text' name='state' onChange={this.props.handleSearch} value={this.props.state} placeholder='State' />
         </Form.Field>
         <Button onClick={(e) => this.props.clickSearch(e, this.props.routerProps)}as={Link} to={"/hikes"} >Find A Hike!</Button>
         </Form>
@@ -29,14 +37,6 @@ class SearchContainer extends React.Component {
 export default SearchContainer
 
 
-//<Menu.Item onClick={this.handleLogout}as='a'>
-//as={Link} to='/login'>
-
-// <div>
-//    <Form>
-//      <Header as="h3">Sign In or Sign Up</Header>
-//      <Form.Field>
-//        <label>First Name</label>
-//        <input onChange={handleUserChange} name="firstName" value={firstName} placeholder='First Name' />
-//      </Form.Field>
-//<Button as={Link} to={“/dashboard”}>Back</Button>
+// handleUserChange = (event) => {
+//   this.setState({[event.target.name]: event.target.value})
+// }

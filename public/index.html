@@ -5,6 +5,12 @@
   rel="stylesheet"
   href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
 />
+  <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js"
+  type="text/javascript" charset="utf-8"></script>
+  <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js"
+  type="text/javascript" charset="utf-8"></script>
+
+
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta
@@ -31,6 +37,15 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script>
+    var platform = new H.service.Platform({
+      'app_id': 'PFQ8m7mjnf4JAc0SpO4G',
+      'app_code': '9zZkpoWGiYzGCkvVg0-EHw'
+    });
+
+    var maptypes = platform.createDefaultLayers();
+    </script>
+
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -41,5 +56,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
   </body>
 </html>

@@ -7,7 +7,7 @@ import { Divider, Segment } from 'semantic-ui-react'
 class HaveHikedDetailContainer extends React.Component {
 
   render () {
-    console.log(this.props);
+    //console.log(this.props);
 
     return (
      <Segment>
