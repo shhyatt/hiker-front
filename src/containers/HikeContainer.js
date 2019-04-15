@@ -6,7 +6,7 @@ import HikeList from '../components/HikeList'
 
 import '../App.css'
 
-class HikeContainer extends React.Component {
+class HikeContainer extends React.PureComponent {
 
   render () {
     // console.log(this.props);

@@ -4,10 +4,10 @@ import ShowCommentsList from '../components/ShowCommentsList'
 import ShowPhotosList from '../components/ShowPhotosList'
 import { Divider, Segment } from 'semantic-ui-react'
 
-class WantToHikeDetailContainer extends React.Component {
+class WantToHikeDetailContainer extends React.PureComponent {
 
   render () {
-    console.log(this.props);
+    //console.log(this.props);
 
     return (
      <Segment>

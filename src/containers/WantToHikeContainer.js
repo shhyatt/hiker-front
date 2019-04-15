@@ -7,7 +7,7 @@ import WantToHikeList from '../components/WantToHikeList'
 
 import '../App.css'
 
-class WantToHikeContainer extends React.Component {
+class WantToHikeContainer extends React.PureComponent {
 
   render () {
     // console.log(this.props);

@@ -70,14 +70,16 @@ class App extends Component {
    this.fetchCoords()
  }
 
- // componentDidUpdate(prevProps, prevState) {
- //   if(prevState.wantToHike !== this.state.wantToHike){
- //     return this.likedHikes()
- //   }
- //   if(prevState.haveHiked !== this.state.haveHiked){
- //     return this.fetchHaveHiked()
- //   }
- // }
+ componentDidUpdate(prevProps, prevState) {
+   if(prevState.wantToHike !== this.state.wantToHike){
+     this.likedHikes()
+   }
+   if(prevState.haveHiked !== this.state.haveHiked){
+      this.fetchHaveHiked()
+
+   }
+ }
+
 
  fetchHikes = (routerProps) => {
 
@@ -249,7 +251,7 @@ class App extends Component {
    //console.log(this.state.coordinateData, "256");
  }
 
-  getCoords = () => {
+ getCoords = () => {
     //console.log("ingetCoords", this.state.coordinateData.Response);
     let data = this.state.coordinateData
 

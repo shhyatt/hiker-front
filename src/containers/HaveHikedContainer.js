@@ -2,7 +2,7 @@ import React from 'react'
 import HaveHikedList from '../components/HaveHikedList'
 import '../App.css'
 
-class HaveHikedContainer extends React.Component {
+class HaveHikedContainer extends React.PureComponent {
 
   render () {
     // console.log(this.props);

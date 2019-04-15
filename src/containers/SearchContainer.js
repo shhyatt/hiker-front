@@ -3,7 +3,7 @@ import { Route, Link, Switch } from 'react-router-dom'
 import { Form, Button, Header } from 'semantic-ui-react'
 import Hike from '../components/Hike'
 
-class SearchContainer extends React.Component {
+class SearchContainer extends React.PureComponent {
 
 
 
