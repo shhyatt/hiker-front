@@ -12,8 +12,8 @@ class SearchContainer extends React.PureComponent {
 
     return (
       <div>
-      <Form>
-        <Header as="h3">Search for a Hike!</Header>
+      <Form className='searchform'>
+        <h2>Search for a Hike!</h2>
         <Form.Field>
         <label>Enter An Address:</label>
         <input type="text" name='address' onChange={this.props.handleSearch} value={this.props.address} placeholder='Street Address'/>
@@ -24,7 +24,7 @@ class SearchContainer extends React.PureComponent {
         </Form.Field>
         <Form.Field>
           <label>State</label>
-          <input type='text' name='state' onChange={this.props.handleSearch} value={this.props.state} placeholder='State' />
+          <input type='text' name='state' onChange={this.props.handleSearch} value={this.props.state} placeholder='State or Country' />
         </Form.Field>
         <Button onClick={(e) => this.props.clickSearch(e, this.props.routerProps)}as={Link} to={"/hikes"} >Find A Hike!</Button>
         </Form>

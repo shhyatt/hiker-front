@@ -4,7 +4,7 @@ import { Button, Divider, Grid, Segment, Image, Icon } from 'semantic-ui-react'
 
 const HikeDetail = (props) => {
 
-  console.log(props);
+  //console.log(props);
 
   return (
     <Segment>

@@ -5,6 +5,7 @@ import { Route, Link, Switch } from 'react-router-dom'
 import HikeContainer from './containers/HikeContainer'
 import WantToHikeContainer from './containers/WantToHikeContainer'
 import HaveHikedContainer from './containers/HaveHikedContainer'
+import HeaderContainer from './containers/HeaderContainer'
 import './App.css'
 import WantToHike from './components/WantToHike'
 import HaveHiked from './components/HaveHiked'
@@ -53,7 +54,8 @@ class App extends Component {
     address: "",
     city: "",
     state: "",
-    coordinateData: []
+    coordinateData: [],
+    currentUser: []
 
   }
 
@@ -76,10 +78,8 @@ class App extends Component {
    }
    if(prevState.haveHiked !== this.state.haveHiked){
       this.fetchHaveHiked()
-
    }
  }
-
 
  fetchHikes = (routerProps) => {
 
@@ -111,7 +111,7 @@ class App extends Component {
      //console.log(users);
      this.setState({
        users: users
-     })
+     }, this.findThisUser)
    })
 
  }
@@ -270,9 +270,6 @@ class App extends Component {
     //console.log(data, "261");
 
   }
- //this.state.address.split(" ")[0]
- //this.address.split(" ")[1]+this.address.split(" ")[2]
- //data.Response.View[0].Result[0].Location.DisplayPosition
 
   handleSignIn = (event) => {
     event.preventDefault()
@@ -280,10 +277,10 @@ class App extends Component {
         if (!!user) {
           localStorage.setItem('id', user.id)
           this.setState({
-            email: user.email,
-            password: user.password_digest,
-            firstName: user.first_name,
-            lastName: user.last_name
+            email: this.state.email,
+            password: this.state.password,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName
           })
         } else {
           return alert("Please double check your email or password.")
@@ -323,9 +320,22 @@ class App extends Component {
   handleUserChange = (event) => {
     this.setState({[event.target.name]: event.target.value})
   }
+
+  findThisUser = () => {
+    //console.log(this.state.users);
+    let currentUser = this.state.users.find(user => user.id === parseInt(localStorage.id))
+    this.setState({
+      currentUser: currentUser
+    })
+
+  }
   handleLogout = () => {
     localStorage.clear()
     this.setState({
+      hikes: [],
+      
+      latitude: "",
+      longitude: "",
       firstName: "",
       lastName: "",
       email: "",
@@ -348,7 +358,12 @@ class App extends Component {
       photoHikeID: [],
       photoLink: "",
       photos: [],
-      detailPhotos: []
+      detailPhotos: [],
+      address: "",
+      city: "",
+      state: "",
+      coordinateData: [],
+      currentUser: []
     })
     //console.log("hello!");
   }
@@ -535,18 +550,20 @@ class App extends Component {
 
   }
 
-  //https://geocoder.api.here.com/6.2/geocode.json?searchtext=200%20S%20Mathilda%20Sunnyvale%20CA&app_id=devportal-demo-20180625&app_code=9v2BkviRwi9Ot26kp2IysQ&gen=9
-
-  //console.log(data.Response.View[0].Result[0].Location.DisplayPosition);
   render() {
 
     return (
+
       <div className="App">
+      <Header>
+         <HeaderContainer
+         currentUser={this.state.currentUser}/>
+        </Header>
         <Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} animation ='push' icon='labeled' inverted vertical visible width='thin'>
             <Menu.Item as={Link} to='/search'>
             Back To Search
-                <Icon name='home' />
+                <Icon name='search' />
             </Menu.Item>
             <Menu.Item as={Link} to='/wanttohike'>Hikes I Want to Do
                 <Icon name='thumbs up outline' />

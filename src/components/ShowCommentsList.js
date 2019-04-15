@@ -1,4 +1,5 @@
 import React from 'react'
+import { Item } from 'semantic-ui-react'
 import ShowComments from './ShowComments'
 
 const ShowCommentsList = (props) => {
@@ -9,9 +10,11 @@ const ShowCommentsList = (props) => {
 
   return (
     <div>
-      <h1>Comments!</h1>
+      <Item.Group divided>
       {renderComments()}
+      </Item.Group>
     </div>
+
   )
 
 
