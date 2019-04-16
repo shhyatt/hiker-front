@@ -10,7 +10,7 @@ const Login = ({handleUserChange, firstName, lastName, email, password, handleSi
 
          <div>
             <Form>
-              <Header as="h3">Sign In or Sign Up</Header>
+              <h2>Sign In or Sign Up</h2>
               <Form.Field>
                 <label>First Name</label>
                 <input onChange={handleUserChange} name="firstName" value={firstName} placeholder='First Name' />

@@ -10,7 +10,6 @@ const ShowPhotosList = (props) => {
 
   return (
     <div>
-    <h3>Photos!</h3>
     <Card.Group>
      {renderPhotos()}
     </Card.Group>

@@ -26,7 +26,7 @@ class SearchContainer extends React.PureComponent {
           <label>State</label>
           <input type='text' name='state' onChange={this.props.handleSearch} value={this.props.state} placeholder='State or Country' />
         </Form.Field>
-        <Button onClick={(e) => this.props.clickSearch(e, this.props.routerProps)}as={Link} to={"/hikes"} >Find A Hike!</Button>
+        <Button type='button' value='Submit' onClick={(e) => this.props.clickSearch(e, this.props.routerProps)}as={Link} to={"/hikes"} >Find A Hike!</Button>
         </Form>
       </div>
     )

@@ -55,7 +55,7 @@ class App extends Component {
     city: "",
     state: "",
     coordinateData: [],
-    currentUser: []
+    currentUser: ""
 
   }
 
@@ -219,12 +219,16 @@ class App extends Component {
  }
 
  handleSearch = (event) => {
-   //console.log(e.target.value);
+
   this.setState({[event.target.name]: event.target.value}, () => this.fetchCoords())
+
+
  }
 
  clickSearch = (e, routerProps) => {
+   console.log(e.target);
    e.preventDefault()
+
    // console.log(this.state.longitude);
    // console.log(this.state.latitude);
    this.fetchHikes(routerProps)
@@ -324,16 +328,26 @@ class App extends Component {
   findThisUser = () => {
     //console.log(this.state.users);
     let currentUser = this.state.users.find(user => user.id === parseInt(localStorage.id))
-    this.setState({
-      currentUser: currentUser
-    })
+    if(currentUser === undefined){
+      this.setState({
+        currentUser: "Guest"
+      })
+    }else{
+      this.setState({
+        currentUser: currentUser.first_name
+      })
+
+    }
+    // this.setState({
+    //   currentUser: currentUser.first_name
+    // })
 
   }
   handleLogout = () => {
     localStorage.clear()
     this.setState({
       hikes: [],
-      
+
       latitude: "",
       longitude: "",
       firstName: "",
@@ -551,6 +565,7 @@ class App extends Component {
   }
 
   render() {
+    //console.log(this.state.currentUser)
 
     return (
 
@@ -664,3 +679,5 @@ export default App;
 
 //app id = PFQ8m7mjnf4JAc0SpO4G
 //app code = 9zZkpoWGiYzGCkvVg0-EHw
+
+//googleKey= AIzaSyAu0ammJhWj0yZuuv0v-giFZmCBIZwDnJU

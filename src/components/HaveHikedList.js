@@ -22,7 +22,7 @@ const HaveHikedList = ({ userHaves, handleHaveHikedDetail, handleAddComment, han
   }
   return (
     <div>
-    <h1>Pick A Hike</h1>
+    <h2>Hikes I've Done</h2>
     <Card.Group>
     {renderHaveHiked()}
     </Card.Group>

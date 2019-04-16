@@ -21,7 +21,7 @@ const WantToHikeList = ({ userWants, handleWantToHikeDetail, handleHikedIt }) =>
   }
   return (
     <div>
-    <h1>Pick A Hike</h1>
+    <h2>Hikes I Want To Do</h2>
     <Card.Group>
     {renderWantHikes()}
     </Card.Group>
