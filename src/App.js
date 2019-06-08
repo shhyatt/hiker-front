@@ -79,13 +79,21 @@ class App extends Component {
    if(prevState.haveHiked !== this.state.haveHiked){
       this.fetchHaveHiked()
    }
+  if(prevState.userWantToHikeHikes !== this.state.userWantToHikeHikes){
+    this.fetchUserWantHikes()
+  }
+  if(prevState.userHaveHikedHikes !== this.state.userHaveHikedHikes){
+    this.fetchUserHaveHiked()
+  }
+
  }
 
  fetchHikes = (routerProps) => {
 
-   fetch(`https://www.hikingproject.com/data/get-trails?lat=${this.state.latitude}&lon=${this.state.longitude}&maxDistance=100&key=200441896-c10efc088226e872ef079f3ab9990b2f`)
+   fetch(`https://www.hikingproject.com/data/get-trails?lat=${this.state.latitude}&lon=${this.state.longitude}&maxDistance=200&maxResults=10&key=200441896-c10efc088226e872ef079f3ab9990b2f`)
    .then(r => r.json())
    .then(hikes => {
+     console.log(hikes);
      routerProps.history.push("/hikes")
          this.setState({
            hikes: hikes
@@ -146,14 +154,16 @@ class App extends Component {
   }
 
  fetchUserWantHikes = () => {
-   fetch(`https://www.hikingproject.com/data/get-trails-by-id?ids=${this.state.userWantHikeID}&key=200441896-c10efc088226e872ef079f3ab9990b2f`)
-   .then(r => r.json())
-   .then(data => {
-     //console.log(data);
-     this.setState({
-       userWantToHikeHikes: data
+     if(this.state.userWantHikeID.length > 0){
+     fetch(`https://www.hikingproject.com/data/get-trails-by-id?ids=${this.state.userWantHikeID}&key=200441896-c10efc088226e872ef079f3ab9990b2f`)
+     .then(r => r.json())
+     .then(data => {
+       //console.log(data);
+       this.setState({
+         userWantToHikeHikes: data
+       })
      })
-   })
+    }
 
  }
 
@@ -187,14 +197,16 @@ class App extends Component {
  }
 
  fetchUserHaveHiked = () => {
-   fetch(`https://www.hikingproject.com/data/get-trails-by-id?ids=${this.state.userHaveHikedID}&key=200441896-c10efc088226e872ef079f3ab9990b2f`)
-   .then(r => r.json())
-   .then(data => {
-     this.setState({
-       userHaveHikedHikes: data
+   if(this.state.userHaveHikedID.length > 0){
+     fetch(`https://www.hikingproject.com/data/get-trails-by-id?ids=${this.state.userHaveHikedID}&key=200441896-c10efc088226e872ef079f3ab9990b2f`)
+     .then(r => r.json())
+     .then(data => {
+       this.setState({
+         userHaveHikedHikes: data
+       })
+       //console.log(data);
      })
-     //console.log(data);
-   })
+    }
 
  }
 
@@ -222,16 +234,20 @@ class App extends Component {
 
   this.setState({[event.target.name]: event.target.value}, () => this.fetchCoords())
 
-
  }
 
  clickSearch = (e, routerProps) => {
-   console.log(e.target);
+   //console.log(e.target);
    e.preventDefault()
 
    // console.log(this.state.longitude);
    // console.log(this.state.latitude);
    this.fetchHikes(routerProps)
+   this.setState({
+     address: "",
+     city: "",
+     state: ""
+   })
 
   }
 
@@ -275,7 +291,8 @@ class App extends Component {
 
   }
 
-  handleSignIn = (event) => {
+  handleSignIn = (event, routerProps) => {
+    //console.log(event.target);
     event.preventDefault()
     const user = this.state.users.find(user => user.email === this.state.email && user.password_digest === this.state.password && user.first_name === this.state.firstName && user.last_name === this.state.lastName);
         if (!!user) {
@@ -284,14 +301,20 @@ class App extends Component {
             email: this.state.email,
             password: this.state.password,
             firstName: this.state.firstName,
-            lastName: this.state.lastName
+            lastName: this.state.lastName,
+            userWantToHikeHikes: [],
+            userHaveHikedHikes: []
           })
         } else {
           return alert("Please double check your email or password.")
-        }
+        } this.findThisUser()
+        this.fetchUserHaveHiked()
+        this.fetchUserHaveHiked()
+
+        routerProps.history.push("/search")
     }
 
-  handleSignUp = (event) => {
+  handleSignUp = (event, routerProps) => {
     event.preventDefault()
     let data = {
       first_name: this.state.firstName,
@@ -315,12 +338,18 @@ class App extends Component {
         firstName: user.first_name,
         lastName: user.last_name,
         email: user.email,
-        password: user.password_digest
-      })
-    })
+        password: user.password_digest,
+        currentUser: user.first_name,
+        userWantToHikeHikes: [],
+        userHaveHikedHikes: []
+      }, () => console.log(this.state.userWantToHikeHikes),
+    this.fetchUserHaveHiked(),
+    this.fetchUserHaveHiked())
+    }, routerProps.history.push("/search"))
     //console.log("Hello!")
       // console.log(e.target);
       }
+
   handleUserChange = (event) => {
     this.setState({[event.target.name]: event.target.value})
   }
@@ -328,6 +357,7 @@ class App extends Component {
   findThisUser = () => {
     //console.log(this.state.users);
     let currentUser = this.state.users.find(user => user.id === parseInt(localStorage.id))
+    //console.log(currentUser);
     if(currentUser === undefined){
       this.setState({
         currentUser: "Guest"
@@ -347,7 +377,8 @@ class App extends Component {
     localStorage.clear()
     this.setState({
       hikes: [],
-
+      unitedStates: [],
+      searchedState: "",
       latitude: "",
       longitude: "",
       firstName: "",
@@ -367,18 +398,19 @@ class App extends Component {
       hikeDetail: [],
       commentHikeID: [],
       comment: "",
-      comments: [],
+
       detailComments: [],
       photoHikeID: [],
       photoLink: "",
-      photos: [],
+
       detailPhotos: [],
       address: "",
       city: "",
       state: "",
       coordinateData: [],
-      currentUser: []
+      currentUser: ""
     })
+    this.findThisUser()
     //console.log("hello!");
   }
 
@@ -463,7 +495,7 @@ class App extends Component {
     this.setState({
       wantToHike: newHikes
     })
-    //console.log(hikeToDelete.id);
+    console.log(hikeToDelete.id);
     fetch(`http://localhost:3000/api/v1/likehikes/${hikeToDelete.id}`, {
       method: "DELETE"
     })
@@ -487,7 +519,7 @@ class App extends Component {
 
   }
   handlePostComment = () => {
-    //console.log("Posting...");
+    console.log("Posting...");
     let haveHikedID = this.state.haveHiked.find(hike => hike.user_id === parseInt(localStorage.id) && hike.hike_id === this.state.commentHikeID)
     //console.log(haveHikedID.id);
     fetch("http://localhost:3000/api/v1/comments", {
@@ -508,7 +540,7 @@ class App extends Component {
       this.setState({
         comments: [...this.state.comments, data]
       })
-    })
+    }, console.log(this.state.comments))
   }
 
   filterComments = (id) => {
@@ -565,7 +597,10 @@ class App extends Component {
   }
 
   render() {
-    //console.log(this.state.currentUser)
+    //console.log("in render", this.state.currentUser)
+    //console.log(this.state.userHaveHikedID.length);
+    //console.log(this.state.hikes);
+    //console.log(this.state.filterComments);
 
     return (
 
@@ -577,7 +612,7 @@ class App extends Component {
         <Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} animation ='push' icon='labeled' inverted vertical visible width='thin'>
             <Menu.Item as={Link} to='/search'>
-            Back To Search
+            Search
                 <Icon name='search' />
             </Menu.Item>
             <Menu.Item as={Link} to='/wanttohike'>Hikes I Want to Do
@@ -624,7 +659,8 @@ class App extends Component {
                         lastName={this.state.lastName}
                         email={this.state.email}
                         password={this.state.password}
-                        handleUserChange={this.handleUserChange} />} />
+                        handleUserChange={this.handleUserChange}
+                        routerProps={props} />} />
                         <Route path='/havehiked'
                         render={(props) => <HaveHikedContainer
                         userHaves={this.state.userHaveHikedHikes}
@@ -673,11 +709,3 @@ class App extends Component {
 }
 
 export default App;
-
-
-//https://wendycollier.com/wp-content/uploads/2014/05/Trail.jpg
-
-//app id = PFQ8m7mjnf4JAc0SpO4G
-//app code = 9zZkpoWGiYzGCkvVg0-EHw
-
-//googleKey= AIzaSyAu0ammJhWj0yZuuv0v-giFZmCBIZwDnJU

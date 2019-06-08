@@ -19,7 +19,7 @@ class HaveHikedDetailContainer extends React.PureComponent {
   }
 
   checkingHikeDetail = () => {
-    console.log(this.props.hikeDetail);
+    //console.log(this.props.hikeDetail);
     if(this.props.hikeDetail === undefined){
       this.setState({
         lat: 59.95,
@@ -42,7 +42,7 @@ class HaveHikedDetailContainer extends React.PureComponent {
 
 
   render () {
-    //console.log(this.props);
+    console.log(this.props.comments);
 
     return (
      <Segment>

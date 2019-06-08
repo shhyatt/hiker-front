@@ -31,6 +31,10 @@ const HikeDetail = (props) => {
             <Icon name='check' />
             <p>I have hiked this!</p>
           </Button>
+          <Button as={Link} to={"/hikes"}>
+            <Icon name='backward' />
+            <p>Go Back to Hikes!</p>
+          </Button>
         </Grid.Column>
       </Grid>
 

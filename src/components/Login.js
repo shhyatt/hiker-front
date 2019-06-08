@@ -1,8 +1,9 @@
 import React from 'react'
 import { Form, Button, Header } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 
-const Login = ({handleUserChange, firstName, lastName, email, password, handleSignIn, handleSignUp}) => {
+const Login = (props) => {
 
 
    //console.log(this.props);
@@ -13,20 +14,20 @@ const Login = ({handleUserChange, firstName, lastName, email, password, handleSi
               <h2>Sign In or Sign Up</h2>
               <Form.Field>
                 <label>First Name</label>
-                <input onChange={handleUserChange} name="firstName" value={firstName} placeholder='First Name' />
+                <input onChange={props.handleUserChange} name="firstName" value={props.firstName} placeholder='First Name' />
               </Form.Field>
               <Form.Field>
                 <label>Last Name</label>
-                <input onChange={handleUserChange} name="lastName" value={lastName} placeholder='Last Name' />
+                <input onChange={props.handleUserChange} name="lastName" value={props.lastName} placeholder='Last Name' />
               </Form.Field>
                 <label>E-mail</label>
-                <input onChange={handleUserChange} name="email" value={email} placeholder='E-mail' />
+                <input onChange={props.handleUserChange} name="email" value={props.email} placeholder='E-mail' />
               <Form.Field>
                 <label>Password</label>
-                <input onChange={handleUserChange} type="password" name="password" value={password} placeholder='Password' />
+                <input onChange={props.handleUserChange} type="password" name="password" value={props.password} placeholder='Password' />
               </Form.Field>
-              <Button type='submit' onClick={handleSignUp}>Sign Up</Button>
-              <Button type='submit' onClick={handleSignIn}>Sign In</Button>
+              <Button type='submit' onClick={(event) => props.handleSignUp(event, props.routerProps)}as={Link} to={"/search"}>Sign Up</Button>
+              <Button type='submit' onClick={(event) => props.handleSignIn(event, props.routerProps)}as={Link} to={"/search"}>Sign In</Button>
             </Form>
           </div>
       )

@@ -9,6 +9,7 @@ class WantToHike extends React.Component {
     //console.log(this.props);
     return (
       <React.Fragment>
+
           <Card>
             <Card.Content onClick={() => this.props.handleWantToHikeDetail(this.props.trail)} as={Link} to={"/wanttohikedetail"}>
             <Card.Header>{this.props.trail.name}</Card.Header>

@@ -5,19 +5,19 @@ import GoogleMapReact from 'google-map-react';
 
 class MapContainer extends React.Component {
 
+
   static defaultProps = {
     zoom: 11
   }
 
 
   render () {
-    console.log(this.props.center.lat);
 
 
     return (
       <div style={{ height: '100vh', width: '100%'}}>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyAu0ammJhWj0yZuuv0v-giFZmCBIZwDnJU'}}
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY}}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}>
           <Marker

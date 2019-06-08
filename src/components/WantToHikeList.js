@@ -20,12 +20,13 @@ const WantToHikeList = ({ userWants, handleWantToHikeDetail, handleHikedIt }) =>
       } else return null
   }
   return (
+
     <div>
-    <h2>Hikes I Want To Do</h2>
+    {userWants.length === 0 ?
+    <h2>Find Some Hikes! Click Search to the Left!</h2> :
     <Card.Group>
     {renderWantHikes()}
-    </Card.Group>
-
+    </Card.Group>}
     </div>
   )
 }

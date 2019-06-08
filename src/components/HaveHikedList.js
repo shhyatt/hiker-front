@@ -2,7 +2,7 @@ import React from 'react'
 
 import HaveHiked from './HaveHiked'
 
-import { Card } from 'semantic-ui-react'
+import { Card, Image } from 'semantic-ui-react'
 
 const HaveHikedList = ({ userHaves, handleHaveHikedDetail, handleAddComment, handleAddAPhoto }) => {
 
@@ -22,10 +22,11 @@ const HaveHikedList = ({ userHaves, handleHaveHikedDetail, handleAddComment, han
   }
   return (
     <div>
-    <h2>Hikes I've Done</h2>
+    {userHaves.length === 0 ?
+      <h2></h2> :
     <Card.Group>
     {renderHaveHiked()}
-    </Card.Group>
+    </Card.Group>}
 
     </div>
   )
